@@ -1,9 +1,9 @@
 package com.oivi.imgboxb.repositories
 
-import com.oivi.imgboxb.domain.User
+import com.oivi.imgboxb.domain.entities.UserEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface UserRepository : JpaRepository<User,Long?>{
+interface UserRepository : JpaRepository<UserEntity,Long?>{
 }

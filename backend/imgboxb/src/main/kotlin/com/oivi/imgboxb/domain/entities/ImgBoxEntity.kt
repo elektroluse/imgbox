@@ -1,11 +1,11 @@
-package com.oivi.imgboxb.domain
+package com.oivi.imgboxb.domain.entities
 
 import jakarta.persistence.*
 
 import java.sql.Timestamp
 
 @Entity(name = "imgboxes")
-data class ImgBox(
+data class ImgBoxEntity(
 
     @Id
     @Column(name = "id")
@@ -23,7 +23,7 @@ data class ImgBox(
 
     @ManyToOne(cascade = [CascadeType.DETACH])
     @JoinColumn(name = "user_id")
-    val user : User,
+    val user : UserEntity,
 
     @Column(name = "created_at")
     val createdAt : Timestamp

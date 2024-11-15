@@ -1,10 +1,10 @@
-package com.oivi.imgboxb.domain
+package com.oivi.imgboxb.domain.entities
 
 import jakarta.persistence.*
 
 @Entity
 @Table(name="users")
-data class User(
+data class UserEntity(
 
     @Id
     @Column(name = "id")

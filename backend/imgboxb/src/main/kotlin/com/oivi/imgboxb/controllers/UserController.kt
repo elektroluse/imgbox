@@ -8,6 +8,6 @@ class UserController {
 
     @PostMapping(path = ["v1/users"])
     fun createUser(){
-        
+
     }
 }

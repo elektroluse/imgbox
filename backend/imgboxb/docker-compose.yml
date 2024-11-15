@@ -7,3 +7,9 @@ services:
 
     environment:
       POSTGRES_PASSWORD: notagoodpassword!
+
+  adminer:
+    image: adminer:latest
+    restart: always
+    ports:
+      - "8888:8080"

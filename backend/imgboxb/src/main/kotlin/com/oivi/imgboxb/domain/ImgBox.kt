@@ -9,7 +9,7 @@ data class ImgBox(
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "imgbox_id_seq")
     val id : Long?,
 
     @Column(name = "title")

@@ -1,7 +1,10 @@
 package com.oivi.imgboxb
 
+import com.oivi.imgboxb.domain.dto.ImgBoxDto
 import com.oivi.imgboxb.domain.dto.UserDto
+import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
+import java.sql.Timestamp
 
 fun UserEntity.toUserDto() = UserDto(
         id = this.id,
@@ -11,4 +14,27 @@ fun UserEntity.toUserDto() = UserDto(
 fun UserDto.toUserEntity() = UserEntity(
     id = this.id,
     username = this.username
+)
+
+fun ImgBoxEntity.toImgBoxDto() = ImgBoxDto(
+
+    id = this.id,
+    title = this.title,
+    description = this.description,
+    tags = this.tags,
+    user = this.user.toUserDto(),
+    createdAt = this.createdAt
+
+)
+
+
+fun ImgBoxDto.toImgBoxEntity() = ImgBoxEntity(
+
+    id = this.id,
+    title = this.title,
+    description = this.description,
+    tags = this.tags,
+    user = this.user.toUserEntity(),
+    createdAt = this.createdAt
+
 )

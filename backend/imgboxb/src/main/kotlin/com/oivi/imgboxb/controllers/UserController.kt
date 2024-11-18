@@ -4,6 +4,8 @@ import com.oivi.imgboxb.domain.dto.UserDto
 import com.oivi.imgboxb.services.UserService
 import com.oivi.imgboxb.toUserDto
 import com.oivi.imgboxb.toUserEntity
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -12,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(private val userService : UserService) {
 
     @PostMapping(path = ["v1/users"])
-    fun createUser(@RequestBody userDto : UserDto) : UserDto{
-        return userService.save(userDto.toUserEntity())
+    fun createUser(@RequestBody userDto : UserDto) : ResponseEntity<UserDto> {
+        val createdUser =  userService.save(userDto.toUserEntity())
             .toUserDto()
+        return ResponseEntity(createdUser, HttpStatus.CREATED)
 
     }
 }

@@ -19,7 +19,7 @@ CREATE TABLE "imgboxes"(
     "id" bigint NOT NULL,
     "title" VARCHAR(255),
     "description" VARCHAR(2048),
-    "tags" VARCHAR(32)[],
+    "tags" VARCHAR(32) array,
     "created_at" TIMESTAMP,
     "user_id" bigint,
     CONSTRAINT "imgboxes_pkey" PRIMARY KEY("id")

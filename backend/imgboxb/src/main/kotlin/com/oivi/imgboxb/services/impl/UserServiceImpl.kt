@@ -11,4 +11,8 @@ class UserServiceImpl(private val userRepository : UserRepository) : UserService
     override fun save(userEntity: UserEntity): UserEntity {
         return userRepository.save(userEntity)
     }
+
+    override fun list(): List<UserEntity> {
+        return userRepository.findAll()
+    }
 }

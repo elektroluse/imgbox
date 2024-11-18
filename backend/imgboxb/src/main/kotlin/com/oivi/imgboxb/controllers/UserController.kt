@@ -6,6 +6,7 @@ import com.oivi.imgboxb.toUserDto
 import com.oivi.imgboxb.toUserEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -19,5 +20,13 @@ class UserController(private val userService : UserService) {
             .toUserDto()
         return ResponseEntity(createdUser, HttpStatus.CREATED)
 
+    }
+
+    @GetMapping(path = ["v1/users"])
+    fun readManyUser() : ResponseEntity<List<UserDto>>{
+          val result : List<UserDto> =  userService.list().map{
+             it.toUserDto()
+         }
+        return ResponseEntity(result, HttpStatus.OK);
     }
 }

@@ -22,8 +22,7 @@ import org.springframework.test.web.servlet.post
 @AutoConfigureMockMvc
 class UserControllerTest @Autowired constructor (
     private val mockMvc : MockMvc,
-    @MockkBean val userService : UserService
-) {
+    @MockkBean val userService : UserService) {
 
 
     @BeforeEach

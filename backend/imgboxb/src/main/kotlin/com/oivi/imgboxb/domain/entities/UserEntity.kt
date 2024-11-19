@@ -12,6 +12,9 @@ data class UserEntity(
     val id : Long?,
 
     @Column(name="username", unique = true)
-    val username : String
+    val username : String,
+
+    @Column(name = "password")
+    var password : String
 
 )

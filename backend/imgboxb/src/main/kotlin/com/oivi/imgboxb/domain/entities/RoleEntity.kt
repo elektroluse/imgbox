@@ -8,7 +8,7 @@ data class RoleEntity (
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_seq")
-    val id : Long?,
+    val id : Int?,
 
     @Column(name = "name", unique = true)
     val name : String

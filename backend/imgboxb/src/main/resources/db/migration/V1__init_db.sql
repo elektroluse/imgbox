@@ -6,8 +6,18 @@ DROP TABLE IF EXISTS "users";
 CREATE TABLE "users"(
     "id" bigint NOT NULL,
     "username" VARCHAR(12) UNIQUE,
-
+    "password" VARCHAR(256),
     CONSTRAINT "users_pkey" PRIMARY KEY("id")
+);
+
+DROP SEQUENCE IF EXISTS "roles_id_seq";
+DROP TABLE IF EXISTS "roles";
+CREATE SEQUENCE "role_id_seq" INCREMENT BY 50 START 1;
+
+CREATE TABLE "roles"(
+    id int NOT NULL,
+    "name" VARCHAR(32) UNIQUE,
+    CONSTRAINT "roles_pkey" PRIMARY KEY("id")
 );
 
 DROP SEQUENCE IF EXISTS "imgbox_id_seq";

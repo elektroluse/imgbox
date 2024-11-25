@@ -1,5 +1,5 @@
 DROP SEQUENCE IF EXISTS "user_id_seq";
-CREATE SEQUENCE "user_id_seq" INCREMENT BY 50 START 1;
+CREATE SEQUENCE "user_id_seq" INCREMENT BY 50 START 10;
 
 DROP TABLE IF EXISTS "users";
 
@@ -10,9 +10,6 @@ CREATE TABLE "users"(
     CONSTRAINT "users_pkey" PRIMARY KEY("id")
 );
 
-DROP SEQUENCE IF EXISTS "roles_id_seq";
-DROP TABLE IF EXISTS "roles";
-CREATE SEQUENCE "role_id_seq" INCREMENT BY 50 START 1;
 
 CREATE TABLE "roles"(
     id int NOT NULL,

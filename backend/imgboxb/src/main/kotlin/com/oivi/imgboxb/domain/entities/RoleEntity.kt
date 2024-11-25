@@ -7,8 +7,7 @@ import jakarta.persistence.*
 data class RoleEntity (
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_id_seq")
-    val id : Int?,
+    val id : Int,
 
     @Column(name = "name", unique = true)
     val name : String

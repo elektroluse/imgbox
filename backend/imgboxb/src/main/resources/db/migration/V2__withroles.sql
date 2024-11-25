@@ -5,8 +5,8 @@ CREATE SEQUENCE "user_id_seq" INCREMENT BY 50 START 1;
 DROP TABLE IF EXISTS "users";
 CREATE TABLE "users" (
     "id" bigint NOT NULL,
-    "password" VARCHAR(72),
     "username" VARCHAR(20) UNIQUE,
+    "password" VARCHAR(72),
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 

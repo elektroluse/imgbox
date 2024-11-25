@@ -12,6 +12,8 @@ import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 
 @Configuration
@@ -33,7 +35,16 @@ class SecurityConfig @Autowired constructor(
         return http.build()
     }
 
+    @Bean
+    fun authenticationManager(
+        authConfig : AuthenticationConfiguration) : AuthenticationManager{
+         return authConfig.authenticationManager
+    }
 
+    @Bean
+    fun passwordEncoder() : PasswordEncoder{
+        return BCryptPasswordEncoder()
+    }
 
 
 }

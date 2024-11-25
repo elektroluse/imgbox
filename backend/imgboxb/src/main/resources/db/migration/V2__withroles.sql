@@ -34,6 +34,10 @@ CREATE TABLE "roles" (
     CONSTRAINT "roles_pkey" PRIMARY KEY ("id")
 );
 
+INSERT INTO "roles" VALUES
+(1,"ADMIN"),
+(2,"USER");
+
 
 DROP TABLE IF EXISTS "user_roles";
 CREATE TABLE "user_roles" (

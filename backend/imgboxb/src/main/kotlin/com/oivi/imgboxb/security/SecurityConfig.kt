@@ -24,10 +24,13 @@ class SecurityConfig @Autowired constructor(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
+
             authorizeHttpRequests {
+                authorize("/api/auth/**", permitAll) // look into
                 authorize(anyRequest, authenticated)
 
             }
+
             csrf { disable() }
             formLogin { }
             httpBasic { }

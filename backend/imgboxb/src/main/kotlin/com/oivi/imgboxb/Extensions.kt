@@ -1,10 +1,14 @@
 package com.oivi.imgboxb
 
 import com.oivi.imgboxb.domain.dto.ImgBoxDto
+import com.oivi.imgboxb.domain.dto.RegistrationForm
 import com.oivi.imgboxb.domain.dto.UserDto
 import com.oivi.imgboxb.domain.dto.UserProfile
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
+import com.oivi.imgboxb.domain.entities.RoleEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
+import com.oivi.imgboxb.repositories.RoleRepository
+import org.springframework.security.crypto.password.PasswordEncoder
 import java.sql.Timestamp
 
 fun UserEntity.toUserDto() = UserDto(
@@ -23,6 +27,12 @@ fun UserDto.toUserEntity() = UserEntity(
     password = this.password
 )
 
+fun RegistrationForm.toUserEntity(encodedPassword : String, roles : MutableSet<RoleEntity>) = UserEntity(
+    id = null,
+    username = this.username,
+    password = encodedPassword,
+    roles = roles
+)
 
 fun ImgBoxEntity.toImgBoxDto() = ImgBoxDto(
 

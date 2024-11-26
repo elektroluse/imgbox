@@ -26,7 +26,6 @@ class SecurityConfig @Autowired constructor(
         http {
 
             authorizeHttpRequests {
-                authorize("/api/auth/**", permitAll) // look into
                 authorize(anyRequest, authenticated)
 
             }

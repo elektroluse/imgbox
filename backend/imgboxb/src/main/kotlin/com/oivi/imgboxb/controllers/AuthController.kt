@@ -7,6 +7,8 @@ import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.repositories.RoleRepository
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.UserService
+import com.oivi.imgboxb.toUserEntity
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
@@ -31,17 +33,20 @@ class AuthController(
 
             return ResponseEntity<String>("Username already exists!",HttpStatus.BAD_REQUEST)
         }
-        val newUserEntity : UserEntity = UserEntity(
-            id = null,
-            username = regDto.username,
-            password = passwordEncoder.encode(regDto.password),
-            roles = mutableSetOf(roleRepository.findByName("USER")!!)
-        )
-        /*
-            refactor this into the service layer
+        // USER role has id 2 in db
+        val userRoleEntity = roleRepository.findByIdOrNull(2)
+            ?: return ResponseEntity<String>("There is no role with id 2",HttpStatus.INTERNAL_SERVER_ERROR)
 
-         */
-        return ResponseEntity<String>("fix me",HttpStatus.BAD_REQUEST)
+        val savedUser = userService.save(
+            regDto.toUserEntity(
+                passwordEncoder.encode(regDto.password),
+                 mutableSetOf(userRoleEntity)
+            ))
+
+        val message = "Created user with name :" +
+                savedUser.username + "(" + savedUser.id +")"
+
+        return ResponseEntity<String>(message ,HttpStatus.CREATED)
     }
 
 

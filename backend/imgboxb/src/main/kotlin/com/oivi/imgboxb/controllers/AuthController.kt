@@ -1,5 +1,6 @@
 package com.oivi.imgboxb.controllers
 
+import com.oivi.imgboxb.domain.dto.LoginDto
 import com.oivi.imgboxb.domain.dto.RegistrationForm
 import com.oivi.imgboxb.domain.dto.UserDto
 import com.oivi.imgboxb.domain.entities.RoleEntity
@@ -12,6 +13,9 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -27,13 +31,26 @@ class AuthController(
     val userService : UserService,
     val passwordEncoder : PasswordEncoder)
 {
+
+    @PostMapping(path = ["login"])
+    fun login(@RequestBody loginDto : LoginDto) : ResponseEntity<String>{
+
+        val authentication : Authentication = authenticationManager.authenticate(
+            UsernamePasswordAuthenticationToken(
+            loginDto.username,
+            loginDto.password)
+        )
+
+        return ResponseEntity("Login successful",HttpStatus.OK)
+    }
+
     @PostMapping(path = ["register"])
     fun registerUser(@RequestBody regDto : RegistrationForm) : ResponseEntity<String>{
         if (userRepository.existsByUsername(regDto.username)) {
 
             return ResponseEntity<String>("Username already exists!",HttpStatus.BAD_REQUEST)
         }
-        // USER role has id 2 in db
+
         val userRoleEntity = roleRepository.findByIdOrNull(2)
             ?: return ResponseEntity<String>("There is no role with id 2",HttpStatus.INTERNAL_SERVER_ERROR)
 

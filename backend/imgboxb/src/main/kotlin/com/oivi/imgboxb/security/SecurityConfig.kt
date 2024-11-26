@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.config.annotation.web.invoke
+import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -19,7 +20,8 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager
 @Configuration
 @EnableWebSecurity
 class SecurityConfig @Autowired constructor(
-    private val userService: UserService) {
+    private val userService: UserService,
+    private val authEntryPoint : JwtAuthEntryPoint ) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
@@ -29,10 +31,15 @@ class SecurityConfig @Autowired constructor(
 
                 authorize(anyRequest, permitAll)
 
-
             }
 
             csrf { disable() }
+            exceptionHandling {
+                    authenticationEntryPoint = authEntryPoint
+            }
+            sessionManagement {
+                sessionCreationPolicy = SessionCreationPolicy.STATELESS
+            }
             formLogin { }
             httpBasic { }
         }

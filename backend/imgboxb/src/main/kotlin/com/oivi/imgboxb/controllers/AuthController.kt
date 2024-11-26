@@ -43,7 +43,7 @@ class AuthController(
                  mutableSetOf(userRoleEntity)
             ))
 
-        val message = "Created user with name :" +
+        val message = "Created user with name : " +
                 savedUser.username + "(" + savedUser.id +")"
 
         return ResponseEntity<String>(message ,HttpStatus.CREATED)

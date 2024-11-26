@@ -24,9 +24,11 @@ class SecurityConfig @Autowired constructor(
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
-
+            securityMatcher("/api/auth/**")
             authorizeHttpRequests {
-                authorize(anyRequest, authenticated)
+
+                authorize(anyRequest, permitAll)
+
 
             }
 

@@ -35,8 +35,8 @@ CREATE TABLE "roles" (
 );
 
 INSERT INTO "roles" VALUES
-(1,"ADMIN"),
-(2,"USER");
+(1,'ADMIN'),
+(2,'USER');
 
 
 DROP TABLE IF EXISTS "user_roles";

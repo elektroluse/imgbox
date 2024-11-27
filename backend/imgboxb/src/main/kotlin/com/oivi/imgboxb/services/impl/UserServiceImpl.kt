@@ -8,10 +8,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
-class UserServiceImpl(private val userRepository : UserRepository) : UserService, UserDetailsService {
+class UserServiceImpl(private val userRepository : UserRepository) : UserService {
 
     override fun save(userEntity: UserEntity): UserEntity {
         return userRepository.save(userEntity)
@@ -23,6 +24,7 @@ class UserServiceImpl(private val userRepository : UserRepository) : UserService
 
     override fun loadUserByUsername(username: String?): UserDetails {
         val userEntity: UserEntity = userRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("$username not found" )
         return User(userEntity.username, userEntity.password, mapRolesToAuthorities(userEntity))
     }
 

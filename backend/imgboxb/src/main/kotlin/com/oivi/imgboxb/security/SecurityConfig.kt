@@ -16,16 +16,19 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig @Autowired constructor(
     private val userService: UserService,
-    private val authEntryPoint : JwtAuthEntryPoint ) {
+    private val authEntryPoint : JwtAuthEntryPoint,
+    private val jwtTokenProvider: JwtTokenProvider) {
 
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http {
+
             securityMatcher("/api/auth/**")
             authorizeHttpRequests {
 
@@ -42,6 +45,8 @@ class SecurityConfig @Autowired constructor(
             }
             formLogin { }
             httpBasic { }
+
+            addFilterBefore<UsernamePasswordAuthenticationFilter>(filter = jwtAuthenticationFilter())
         }
         return http.build()
     }
@@ -56,6 +61,9 @@ class SecurityConfig @Autowired constructor(
     fun passwordEncoder() : PasswordEncoder{
         return BCryptPasswordEncoder()
     }
-
+    @Bean
+    fun jwtAuthenticationFilter() : JwtAuthenticationFilter{
+        return JwtAuthenticationFilter(jwtTokenProvider,userService)
+    }
 
 }

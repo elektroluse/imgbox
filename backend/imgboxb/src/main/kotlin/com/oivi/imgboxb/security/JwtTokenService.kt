@@ -6,22 +6,21 @@ import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException
 import org.springframework.security.core.Authentication
-import org.springframework.security.crypto.codec.Base64
-import org.springframework.stereotype.Component
-import java.time.LocalDateTime
+import org.springframework.stereotype.Service
 import java.util.Date
 import javax.crypto.SecretKey
-import javax.crypto.spec.SecretKeySpec
 
 
-@Component
-class JwtTokenProvider(
+@Service
+class JwtTokenService(
 ) {
 
     fun signingKey() : SecretKey {
         val keyBytes = Decoders.BASE64.decode(SecurityConstants.JWT_SECRET)
         return Keys.hmacShaKeyFor(keyBytes)
     }
+
+
 
     fun generateToken(authentication : Authentication) : String{
         val username  = authentication.name
@@ -45,13 +44,16 @@ class JwtTokenProvider(
     }
 
     fun usernameFromJwt(token : String) : String{
-        val claims : Claims = Jwts.parser()
+        val claims = extractAllClaims(token)
+        return claims.subject
+    }
+
+    fun extractAllClaims(token : String) : Claims{
+        return Jwts.parser()
             .verifyWith(signingKey())
             .build()
             .parseSignedClaims(token)
             .payload
-
-        return claims.subject
     }
 
 

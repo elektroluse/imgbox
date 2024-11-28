@@ -1,12 +1,11 @@
 package com.oivi.imgboxb.controllers
 
+import com.oivi.imgboxb.domain.dto.AuthResponseDto
 import com.oivi.imgboxb.domain.dto.LoginDto
 import com.oivi.imgboxb.domain.dto.RegistrationForm
-import com.oivi.imgboxb.domain.dto.UserDto
-import com.oivi.imgboxb.domain.entities.RoleEntity
-import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.repositories.RoleRepository
 import com.oivi.imgboxb.repositories.UserRepository
+import com.oivi.imgboxb.security.JwtTokenService
 import com.oivi.imgboxb.services.UserService
 import com.oivi.imgboxb.toUserEntity
 import org.springframework.data.repository.findByIdOrNull
@@ -29,19 +28,21 @@ class AuthController(
     val userRepository : UserRepository,
     val roleRepository : RoleRepository,
     val userService : UserService,
-    val passwordEncoder : PasswordEncoder)
+    val passwordEncoder : PasswordEncoder,
+    val jwtTokenService : JwtTokenService)
 {
 
     @PostMapping(path = ["login"])
-    fun login(@RequestBody loginDto : LoginDto) : ResponseEntity<String>{
+    fun login(@RequestBody loginDto : LoginDto) : ResponseEntity<AuthResponseDto>{
 
         val authentication : Authentication = authenticationManager.authenticate(
             UsernamePasswordAuthenticationToken(
             loginDto.username,
             loginDto.password)
         )
-
-        return ResponseEntity("Login successful",HttpStatus.OK)
+        SecurityContextHolder.getContext().authentication = authentication
+        val token = jwtTokenService.generateToken(authentication)
+        return ResponseEntity(AuthResponseDto(token),HttpStatus.OK)
     }
 
     @PostMapping(path = ["register"])

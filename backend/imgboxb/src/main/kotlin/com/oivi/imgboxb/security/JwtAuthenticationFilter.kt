@@ -12,8 +12,8 @@ import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 
 class JwtAuthenticationFilter @Autowired constructor(
-    private val tokenProvider : JwtTokenProvider,
-    val userService : UserService)
+    private val tokenProvider : JwtTokenService,
+    private val userService : UserService)
     : OncePerRequestFilter() {
 
     override fun doFilterInternal(
@@ -24,18 +24,20 @@ class JwtAuthenticationFilter @Autowired constructor(
         if(StringUtils.hasText(token) && tokenProvider.validateToken(token!!)){
             val username : String = tokenProvider.usernameFromJwt(token)
             val userDetails = userService.loadUserByUsername(username)
-            val authToken : UsernamePasswordAuthenticationToken = UsernamePasswordAuthenticationToken(
+            val authToken = UsernamePasswordAuthenticationToken(
                 userDetails,
                 null,
                 userDetails.authorities)
             authToken.details = WebAuthenticationDetailsSource().buildDetails(request)
             SecurityContextHolder.getContext().authentication = authToken
+
         }
         filterChain.doFilter(request,response)
     }
 
     private fun tokenFromRequest(request : HttpServletRequest) : String?{
         val bearerToken = request.getHeader("Authorization")
+        println(bearerToken)
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring(7, bearerToken.length)
         }

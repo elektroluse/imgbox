@@ -3,12 +3,12 @@ package com.oivi.imgboxb.controllers
 import com.oivi.imgboxb.domain.dto.AuthResponseDto
 import com.oivi.imgboxb.domain.dto.LoginDto
 import com.oivi.imgboxb.domain.dto.RegistrationForm
+import com.oivi.imgboxb.exceptions.RoleRepositoryException
 import com.oivi.imgboxb.repositories.RoleRepository
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.security.JwtTokenService
 import com.oivi.imgboxb.services.UserService
 import com.oivi.imgboxb.toUserEntity
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
@@ -47,24 +47,21 @@ class AuthController(
 
     @PostMapping(path = ["register"])
     fun registerUser(@RequestBody regDto : RegistrationForm) : ResponseEntity<String>{
-        if (userRepository.existsByUsername(regDto.username)) {
+        try {
+            val savedUser = userService.create(
+                regDto.toUserEntity(passwordEncoder.encode(regDto.password)))
 
-            return ResponseEntity<String>("Username already exists!",HttpStatus.BAD_REQUEST)
+            val message = "Created user with name : " + savedUser.username + "(" + savedUser.id +")"
+
+            return ResponseEntity<String>(message ,HttpStatus.CREATED)
+
+        } catch (ex : Exception){
+            return when(ex){
+                is IllegalStateException -> ResponseEntity<String>("Username is already in use", HttpStatus.BAD_REQUEST)
+                is RoleRepositoryException -> ResponseEntity<String>(ex.message, HttpStatus.INTERNAL_SERVER_ERROR)
+                else -> ResponseEntity<String>("Unexpected exception",HttpStatus.INTERNAL_SERVER_ERROR)
+            }
         }
-
-        val userRoleEntity = roleRepository.findByIdOrNull(2)
-            ?: return ResponseEntity<String>("There is no role with id 2",HttpStatus.INTERNAL_SERVER_ERROR)
-
-        val savedUser = userService.save(
-            regDto.toUserEntity(
-                passwordEncoder.encode(regDto.password),
-                 mutableSetOf(userRoleEntity)
-            ))
-
-        val message = "Created user with name : " +
-                savedUser.username + "(" + savedUser.id +")"
-
-        return ResponseEntity<String>(message ,HttpStatus.CREATED)
     }
 
 

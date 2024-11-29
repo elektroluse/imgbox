@@ -2,8 +2,6 @@ package com.oivi.imgboxb.controllers
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.ninjasquad.springmockk.MockkBean
-import com.oivi.imgboxb.domain.dto.UserDto
-import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.services.UserService
 import com.oivi.imgboxb.testUserDtoA
 import com.oivi.imgboxb.toUserEntity
@@ -28,7 +26,7 @@ class UserControllerTest @Autowired constructor (
     @BeforeEach
     fun beforeEach(){
         every {
-            userService.save(any())
+            userService.create(any())
         } answers {
             firstArg()
         }
@@ -57,6 +55,6 @@ class UserControllerTest @Autowired constructor (
             content = objectMapper.writeValueAsString(testUser1)
         }
         val expected = testUser1.toUserEntity();
-        verify{userService.save(expected)}
+        verify{userService.create(expected)}
     }
 }

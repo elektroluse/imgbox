@@ -5,6 +5,6 @@ import org.springframework.security.core.userdetails.UserDetailsService
 
 interface UserService : UserDetailsService {
 
-    fun save(userEntity : UserEntity) : UserEntity
+    fun create(userEntity : UserEntity) : UserEntity
     fun list() : List<UserEntity>
 }

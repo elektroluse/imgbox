@@ -27,11 +27,10 @@ fun UserDto.toUserEntity() = UserEntity(
     password = this.password
 )
 
-fun RegistrationForm.toUserEntity(encodedPassword : String, roles : MutableSet<RoleEntity>) = UserEntity(
+fun RegistrationForm.toUserEntity(encodedPassword : String) = UserEntity(
     id = null,
     username = this.username,
-    password = encodedPassword,
-    roles = roles
+    password = encodedPassword
 )
 
 fun ImgBoxEntity.toImgBoxDto() = ImgBoxDto(

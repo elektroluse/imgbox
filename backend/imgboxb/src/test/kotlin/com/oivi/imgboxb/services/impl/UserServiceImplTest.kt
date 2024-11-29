@@ -15,7 +15,7 @@ class UserServiceImplTest @Autowired constructor(
 
     @Test
     fun`test that save stores the user in db`(){
-        val savedUser = underTest.save(testUserEntityA())
+        val savedUser = underTest.create(testUserEntityA())
         assertThat(savedUser.id).isNotNull();
         val retrievedFromDb = userRepository.findByIdOrNull(savedUser.id);
         assertThat(retrievedFromDb).isNotNull();

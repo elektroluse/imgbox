@@ -18,7 +18,7 @@ class UserController(private val userService : UserService) {
 
     @PostMapping(path = ["v1/users"])
     fun createUser(@RequestBody userDto : UserDto) : ResponseEntity<UserDto> {
-        val createdUser =  userService.save(userDto.toUserEntity())
+        val createdUser =  userService.create(userDto.toUserEntity())
             .toUserDto()
         return ResponseEntity(createdUser, HttpStatus.CREATED)
 

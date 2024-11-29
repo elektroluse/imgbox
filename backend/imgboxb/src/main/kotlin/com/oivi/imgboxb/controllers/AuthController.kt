@@ -53,7 +53,7 @@ class AuthController(
 
             val message = "Created user with name : " + savedUser.username + "(" + savedUser.id +")"
 
-            return ResponseEntity<String>(message ,HttpStatus.CREATED)
+            return ResponseEntity<String>(message, HttpStatus.CREATED)
 
         } catch (ex : Exception){
             return when(ex){

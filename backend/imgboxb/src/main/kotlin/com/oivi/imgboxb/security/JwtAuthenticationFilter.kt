@@ -37,7 +37,6 @@ class JwtAuthenticationFilter @Autowired constructor(
 
     private fun tokenFromRequest(request : HttpServletRequest) : String?{
         val bearerToken = request.getHeader("Authorization")
-        println(bearerToken)
         if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
             return bearerToken.substring(7, bearerToken.length)
         }

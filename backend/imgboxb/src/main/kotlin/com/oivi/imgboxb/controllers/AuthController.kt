@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/api/auth"])
 class AuthController(
     val authenticationManager : AuthenticationManager,
-    val userRepository : UserRepository,
-    val roleRepository : RoleRepository,
     val userService : UserService,
     val passwordEncoder : PasswordEncoder,
     val jwtTokenService : JwtTokenService)
@@ -51,14 +49,14 @@ class AuthController(
             val savedUser = userService.create(
                 regDto.toUserEntity(passwordEncoder.encode(regDto.password)))
 
-            val message = "Created user with name : " + savedUser.username + "(" + savedUser.id +")"
+            val message = "Created user with name : " + savedUser.username + " (" + savedUser.id +")"
 
             return ResponseEntity<String>(message, HttpStatus.CREATED)
 
-        } catch (ex : Exception){
-            return when(ex){
+        } catch (e : Exception){
+            return when(e){
                 is IllegalStateException -> ResponseEntity<String>("Username is already in use", HttpStatus.BAD_REQUEST)
-                is RoleRepositoryException -> ResponseEntity<String>(ex.message, HttpStatus.INTERNAL_SERVER_ERROR)
+                is RoleRepositoryException -> ResponseEntity<String>(e.message, HttpStatus.INTERNAL_SERVER_ERROR)
                 else -> ResponseEntity<String>("Unexpected exception",HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }

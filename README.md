@@ -1,5 +1,5 @@
 # Imgbox
- Imgbox web application, react frontend,  kotlin springboot backend
+ Imgbox web application, frontend tbd,  kotlin springboot backend
 
 ## Backend
 - Kotlin
@@ -7,4 +7,5 @@
 - Spring Boot
 - JPA
 - Flyway
+- MinIO for file storage (?)
 - Docker-compose with Postgres and Adminer

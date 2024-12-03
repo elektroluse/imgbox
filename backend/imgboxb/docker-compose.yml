@@ -13,3 +13,16 @@ services:
     restart: always
     ports:
       - "8888:8080"
+
+  minio:
+        image: docker.io/bitnami/minio:latest
+        restart: always
+        container_name: "minio"
+        ports:
+          - "9000:9000"
+          - "9001:9001"
+        volumes:
+          - ./minio_data/:/data/
+        environment:
+          MINIO_ROOT_USER: admin
+          MINIO_ROOT_PASSWORD: password

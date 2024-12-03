@@ -5,15 +5,10 @@ import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
-import java.sql.Timestamp
 
-data class ImgBoxDto (
+data class ImgboxFormDto(
 
-    val id : Long?,
     val title : String,
     val description : String,
-    var tags : MutableSet<String>,
-    var fileUrl : String,
-    val user : UserDto,
-    val createdAt : Timestamp
+    var tags : MutableSet<String>
 )

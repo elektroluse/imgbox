@@ -40,6 +40,7 @@ fun ImgBoxEntity.toImgBoxDto() = ImgBoxDto(
     description = this.description,
     tags = this.tags,
     user = this.user.toUserDto(),
+    fileUrl = this.fileUrl,
     createdAt = this.createdAt
 
 )
@@ -51,6 +52,7 @@ fun ImgBoxDto.toImgBoxEntity() = ImgBoxEntity(
     title = this.title,
     description = this.description,
     tags = this.tags,
+    fileUrl = this.fileUrl,
     user = this.user.toUserEntity(),
     createdAt = this.createdAt
 

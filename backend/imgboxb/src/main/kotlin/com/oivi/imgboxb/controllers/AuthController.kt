@@ -7,6 +7,7 @@ import com.oivi.imgboxb.exceptions.RoleRepositoryException
 import com.oivi.imgboxb.repositories.RoleRepository
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.security.JwtTokenService
+import com.oivi.imgboxb.services.ImageStorageService
 import com.oivi.imgboxb.services.UserService
 import com.oivi.imgboxb.toUserEntity
 import org.springframework.http.HttpStatus

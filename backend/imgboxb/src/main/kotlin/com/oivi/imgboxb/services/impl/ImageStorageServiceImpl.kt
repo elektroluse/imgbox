@@ -30,7 +30,7 @@ class ImageStorageServiceImpl @Autowired constructor(
 
             val inputStream = f.inputStream
             val putObjectArgs = PutObjectArgs.builder()
-                .bucket(getOrCreateBucketName(username,private))
+                .bucket(createBucketIfNotExist())
                 .`object`(filename).stream(inputStream, f.size, -1)
                 .contentType(f.contentType)
                 .build()
@@ -44,9 +44,23 @@ class ImageStorageServiceImpl @Autowired constructor(
         }
     }
 
+    private fun createBucketIfNotExist() : String {
+
+        val bucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
+            .bucket(bucketName)
+            .build());
+        if(bucketExists) return bucketName
+
+        minioClient.makeBucket(MakeBucketArgs.builder()
+            .bucket(bucketName)
+            .build())
+        return bucketName
+    }
+
     private fun getOrCreateBucketName(username : String, private : Boolean) : String{
-        val privateBucketName = "$bucketName/$username/private"
-        val publicBucketName = "$bucketName/$username/public"
+        val username = username.lowercase()
+        val privateBucketName = "$bucketName-$username-private"
+        val publicBucketName = "$bucketName-$username-public"
 
         val privateBucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
             .bucket(privateBucketName)

@@ -10,5 +10,6 @@ data class ImgboxFormDto(
 
     val title : String,
     val description : String,
-    var tags : MutableSet<String>
+    var tags : MutableSet<String>,
+    var username : String
 )

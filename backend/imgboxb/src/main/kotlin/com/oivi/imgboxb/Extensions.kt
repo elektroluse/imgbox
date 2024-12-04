@@ -1,9 +1,6 @@
 package com.oivi.imgboxb
 
-import com.oivi.imgboxb.domain.dto.ImgBoxDto
-import com.oivi.imgboxb.domain.dto.RegistrationForm
-import com.oivi.imgboxb.domain.dto.UserDto
-import com.oivi.imgboxb.domain.dto.UserProfile
+import com.oivi.imgboxb.domain.dto.*
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.RoleEntity
 import com.oivi.imgboxb.domain.entities.UserEntity

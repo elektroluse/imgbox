@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import java.time.Instant
+import java.time.temporal.ChronoUnit
 
 @Service
 class ImageStorageServiceImpl @Autowired constructor(
@@ -89,6 +90,6 @@ class ImageStorageServiceImpl @Autowired constructor(
     }
 
     override fun generateUniqueName(f: MultipartFile) : String {
-        return Instant.now().toString() + "-" + (f.originalFilename?.replace(" ", "_"))
+        return Instant.now().truncatedTo(ChronoUnit.SECONDS).toString() + "-" + (f.originalFilename?.replace(" ", "_"))
     }
 }

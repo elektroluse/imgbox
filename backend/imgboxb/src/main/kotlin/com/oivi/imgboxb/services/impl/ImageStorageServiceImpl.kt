@@ -27,8 +27,6 @@ class ImageStorageServiceImpl @Autowired constructor(
     override fun uploadImage(username : String, private : Boolean, f : MultipartFile) : String{
         val filename = generateUniqueName(f)
         try {
-
-
             val inputStream = f.inputStream
             val putObjectArgs = PutObjectArgs.builder()
                 .bucket(createBucketIfNotExist())
@@ -38,7 +36,7 @@ class ImageStorageServiceImpl @Autowired constructor(
 
             minioClient.putObject(putObjectArgs)
 
-            return "$minioUrl $bucketName $filename"
+            return "$minioUrl/$bucketName/$filename"
         }
         catch (e : Exception){
             throw RuntimeException("Image was not stored", e)
@@ -58,36 +56,6 @@ class ImageStorageServiceImpl @Autowired constructor(
         return bucketName
     }
 
-    private fun getOrCreateBucketName(username : String, private : Boolean) : String{
-        val username = username.lowercase()
-        val privateBucketName = "$bucketName-$username-private"
-        val publicBucketName = "$bucketName-$username-public"
-
-        val privateBucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
-            .bucket(privateBucketName)
-            .build());
-
-        val publicBucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
-            .bucket(publicBucketName)
-            .build());
-
-        if(private){
-            if (!privateBucketExists){
-                minioClient.makeBucket(MakeBucketArgs.builder()
-                    .bucket(privateBucketName)
-                    .build())
-            }
-            return privateBucketName
-        }
-        else{
-            if (!publicBucketExists){
-                minioClient.makeBucket(MakeBucketArgs.builder()
-                    .bucket(privateBucketName)
-                    .build())
-            }
-            return publicBucketName
-        }
-    }
 
     override fun generateUniqueName(f: MultipartFile) : String {
         return Instant.now().truncatedTo(ChronoUnit.SECONDS).toString() + "-" + (f.originalFilename?.replace(" ", "_"))

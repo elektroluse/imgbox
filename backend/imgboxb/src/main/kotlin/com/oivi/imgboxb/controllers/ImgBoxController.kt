@@ -33,7 +33,7 @@ class ImgBoxController(
         ) : ResponseEntity<String>{
         val principalUsername = authentication.name
         val userEntity : UserEntity = userRepository.findByUsername(principalUsername)
-            ?: return ResponseEntity<String>("User does not exists" ,HttpStatus.BAD_REQUEST )
+            ?: return ResponseEntity<String>("User does not exist" ,HttpStatus.BAD_REQUEST )
 
         val tempImgboxEntity  = ImgBoxEntity(null,imgboxDto.title,imgboxDto.description,imgboxDto.tags,"",userEntity,
             Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.MICROS)))

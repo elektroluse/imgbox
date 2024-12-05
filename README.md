@@ -11,14 +11,17 @@
     - Create endpoint `POST : /api/imgbox/create`
 
 ## Services
- - ImageStorageService
+ - `ImageStorageService`
     - Upload and get files from MinIO client
 
- - UserService
+ - `UserService`
     - Stores and retrieves Users from the database
 
-- ImgboxService
+- `ImgboxService`
     - Stores and retrieves ImgBoxes from the database
+
+- `JwtTokenService`
+    - Generates, parses and validates jwt tokens
 ## Backend
 - Kotlin
 - Maven

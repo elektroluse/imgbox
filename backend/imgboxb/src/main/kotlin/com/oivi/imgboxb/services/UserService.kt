@@ -7,4 +7,5 @@ interface UserService : UserDetailsService {
 
     fun create(userEntity : UserEntity) : UserEntity
     fun list() : List<UserEntity>
+    fun getUser(username: String) : UserEntity
 }

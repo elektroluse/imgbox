@@ -1,5 +1,6 @@
 package com.oivi.imgboxb.services.impl
 
+import com.oivi.imgboxb.exceptions.ImageUploadException
 import com.oivi.imgboxb.services.ImageStorageService
 import io.minio.BucketExistsArgs
 import io.minio.MakeBucketArgs
@@ -39,7 +40,7 @@ class ImageStorageServiceImpl @Autowired constructor(
             return "$minioUrl/$bucketName/$filename"
         }
         catch (e : Exception){
-            throw RuntimeException("Image was not stored", e)
+            throw ImageUploadException("Image was not uploaded to storage service")
         }
     }
 

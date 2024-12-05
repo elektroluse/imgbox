@@ -33,6 +33,11 @@ class UserServiceImpl(
 
     }
 
+    override fun getUser(username : String) : UserEntity{
+        return userRepository.findByUsername(username)
+            ?: throw UsernameNotFoundException("No user with \'$username\' in database")
+    }
+
     override fun list(): List<UserEntity> {
         return userRepository.findAll()
     }

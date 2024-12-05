@@ -7,6 +7,8 @@ import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.repositories.RoleRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import java.sql.Timestamp
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 fun UserEntity.toUserDto() = UserDto(
         id = this.id,
@@ -53,4 +55,14 @@ fun ImgBoxDto.toImgBoxEntity() = ImgBoxEntity(
     user = this.user.toUserEntity(),
     createdAt = this.createdAt
 
+)
+
+fun ImgboxFormDto.toImgBoxEntity(userEntity : UserEntity) = ImgBoxEntity(
+    id = null,
+    title = this.title,
+    description = this.description,
+    tags = this.tags,
+    fileUrl = "",
+    user = userEntity,
+    createdAt = Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.MICROS))
 )

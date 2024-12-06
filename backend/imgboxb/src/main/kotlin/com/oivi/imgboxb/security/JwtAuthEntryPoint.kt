@@ -14,6 +14,7 @@ class JwtAuthEntryPoint : AuthenticationEntryPoint {
         response: HttpServletResponse?,
         authException: AuthenticationException?
     ) {
+        println("COMMENCE")
         response!!.sendError(HttpServletResponse.SC_UNAUTHORIZED,authException!!.message)
     }
 

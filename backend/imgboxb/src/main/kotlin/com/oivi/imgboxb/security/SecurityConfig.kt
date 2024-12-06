@@ -30,9 +30,12 @@ class SecurityConfig @Autowired constructor(
         http {
 
             authorizeHttpRequests {
+                authorize(AntPathRequestMatcher("/api/auth/register"),permitAll)
+                authorize(AntPathRequestMatcher("/api/auth/login"),permitAll)
                 authorize(AntPathRequestMatcher("/api/secure/testuser"),  hasAuthority("USER"))
                 authorize(AntPathRequestMatcher("/api/secure/testadmin"),  hasAuthority("ADMIN"))
-                authorize(anyRequest, permitAll)
+                authorize(AntPathRequestMatcher("/api/imgbox/create"), hasAuthority("USER"))
+                authorize(anyRequest, authenticated)
 
             }
 

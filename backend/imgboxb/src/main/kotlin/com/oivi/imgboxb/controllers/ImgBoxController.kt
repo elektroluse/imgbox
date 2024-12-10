@@ -1,5 +1,6 @@
 package com.oivi.imgboxb.controllers
 
+import com.oivi.imgboxb.domain.dto.ImgBoxDto
 import com.oivi.imgboxb.domain.dto.ImgboxFormDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
@@ -12,11 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestPart
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.sql.Timestamp
 import java.time.LocalDateTime
@@ -52,6 +49,12 @@ class ImgBoxController(
         }
     }
 
+    @GetMapping(path = ["{imgboxid}"])
+    fun getImgboxWithId(@PathVariable("imgboxid") imgboxid : String) : ResponseEntity<ImgBoxDto>{
+
+        val imgBox : ImgBoxDto = imageboxService.getImagebox().toImgBoxDto()
+        return ResponseEntity<ImgBoxDto>(imgBox, HttpStatus.OK)
+    }
     @PostMapping(path = ["filetest"])
     fun test(@RequestPart("file") mf : MultipartFile) : ResponseEntity<String>{
         println(mf.name)

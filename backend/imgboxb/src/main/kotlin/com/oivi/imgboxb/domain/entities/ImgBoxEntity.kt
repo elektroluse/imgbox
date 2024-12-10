@@ -21,8 +21,8 @@ data class ImgBoxEntity(
     @Column(name = "tags")
     var tags : MutableSet<String>,
 
-    @Column(name = "file_url")
-    var fileUrl : String,
+    @Column(name = "filename")
+    var filename : String,
 
     @ManyToOne(cascade = [CascadeType.DETACH])
     @JoinColumn(name = "user_id")

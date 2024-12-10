@@ -19,7 +19,7 @@ CREATE TABLE "imgboxes" (
     "title" VARCHAR(255),
     "description" VARCHAR(2048),
     "tags" VARCHAR(32) array,
-    "file_url" TEXT,
+    "filename" TEXT,
     "created_at" TIMESTAMP(6),
     "user_id" bigint,
     CONSTRAINT "imgboxes_pkey" PRIMARY KEY("id"),

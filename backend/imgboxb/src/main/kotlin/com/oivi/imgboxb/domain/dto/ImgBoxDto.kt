@@ -13,7 +13,7 @@ data class ImgBoxDto (
     val title : String,
     val description : String,
     var tags : MutableSet<String>,
-    var fileUrl : String,
+    var filename : String,
     val user : UserDto,
     val createdAt : Timestamp
 )

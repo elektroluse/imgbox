@@ -39,7 +39,7 @@ fun ImgBoxEntity.toImgBoxDto() = ImgBoxDto(
     description = this.description,
     tags = this.tags,
     user = this.user.toUserDto(),
-    fileUrl = this.fileUrl,
+    filename = this.filename,
     createdAt = this.createdAt
 
 )
@@ -51,7 +51,7 @@ fun ImgBoxDto.toImgBoxEntity() = ImgBoxEntity(
     title = this.title,
     description = this.description,
     tags = this.tags,
-    fileUrl = this.fileUrl,
+    filename = this.filename,
     user = this.user.toUserEntity(),
     createdAt = this.createdAt
 
@@ -62,7 +62,7 @@ fun ImgboxFormDto.toImgBoxEntity(userEntity : UserEntity) = ImgBoxEntity(
     title = this.title,
     description = this.description,
     tags = this.tags,
-    fileUrl = "",
+    filename = "",
     user = userEntity,
     createdAt = Timestamp.valueOf(LocalDateTime.now().truncatedTo(ChronoUnit.MICROS))
 )

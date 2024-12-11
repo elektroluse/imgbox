@@ -10,6 +10,7 @@ import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImgboxService
 import com.oivi.imgboxb.services.UserService
 import com.oivi.imgboxb.toImgBoxDto
+import com.oivi.imgboxb.toImgBoxDtoSafe
 import com.oivi.imgboxb.toImgBoxEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -61,8 +62,8 @@ class ImgBoxController(
     fun getImgBoxesByUsername(@PathVariable("username") username : String) : ResponseEntity<List<ImgBoxDto>>{
         try {
             val result = imageboxService.getImgboxesByUsername(username)
-            return ResponseEntity(result.map { it.toImgBoxDto() }, HttpStatus.OK)
-        
+            return ResponseEntity(result.map { it.toImgBoxDtoSafe() }, HttpStatus.OK)
+
         } catch (e : Exception){
             return when(e){
                 is UsernameNotFoundException -> ResponseEntity(HttpStatus.NOT_FOUND)

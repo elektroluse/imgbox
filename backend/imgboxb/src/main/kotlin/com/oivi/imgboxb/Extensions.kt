@@ -32,6 +32,12 @@ fun RegistrationForm.toUserEntity(encodedPassword : String) = UserEntity(
     password = encodedPassword
 )
 
+fun UserEntity.toUserDtoOmitP() = UserDto(
+    id = this.id,
+    username = this.username,
+    password = ""
+)
+
 fun ImgBoxEntity.toImgBoxDto() = ImgBoxDto(
 
     id = this.id,
@@ -39,6 +45,18 @@ fun ImgBoxEntity.toImgBoxDto() = ImgBoxDto(
     description = this.description,
     tags = this.tags,
     user = this.user.toUserDto(),
+    fileUrl = this.fileUrl,
+    createdAt = this.createdAt
+
+)
+
+fun ImgBoxEntity.toImgBoxDtoSafe() = ImgBoxDto(
+
+    id = this.id,
+    title = this.title,
+    description = this.description,
+    tags = this.tags,
+    user = this.user.toUserDtoOmitP(),
     fileUrl = this.fileUrl,
     createdAt = this.createdAt
 

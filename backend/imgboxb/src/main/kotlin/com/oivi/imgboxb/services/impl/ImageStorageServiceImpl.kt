@@ -69,7 +69,7 @@ class ImageStorageServiceImpl @Autowired constructor(
     }
 
     private fun getObjKeyFromUrl(url : String) : String{
-        return url.substringAfter(bucketName)
+        return url.substringAfter("$bucketName/")
         // example:  http://localhost:9000/imgboxes/2024-12-11T17:22:27Z-test.png
     }
 

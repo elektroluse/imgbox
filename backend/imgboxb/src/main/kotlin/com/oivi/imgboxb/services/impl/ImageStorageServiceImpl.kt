@@ -1,17 +1,17 @@
 package com.oivi.imgboxb.services.impl
 
+import com.oivi.imgboxb.configs.MinioConfig
 import com.oivi.imgboxb.exceptions.ImageUploadException
 import com.oivi.imgboxb.services.ImageStorageService
-import io.minio.BucketExistsArgs
-import io.minio.MakeBucketArgs
-import io.minio.MinioClient
-import io.minio.PutObjectArgs
+import io.minio.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
+import java.io.InputStream
 import java.time.Instant
 import java.time.temporal.ChronoUnit
+
 
 @Service
 class ImageStorageServiceImpl @Autowired constructor(
@@ -44,6 +44,17 @@ class ImageStorageServiceImpl @Autowired constructor(
         }
     }
 
+    override fun getInputStream(fileUrl : String) : InputStream{
+        val objKey = getObjKeyFromUrl(fileUrl)
+        return minioClient.getObject(
+            GetObjectArgs
+                .builder()
+                .bucket(bucketName)
+                .`object`(objKey)
+                .build()
+        )
+    }
+
     private fun createBucketIfNotExist() : String {
 
         val bucketExists = minioClient.bucketExists(BucketExistsArgs.builder()
@@ -55,6 +66,11 @@ class ImageStorageServiceImpl @Autowired constructor(
             .bucket(bucketName)
             .build())
         return bucketName
+    }
+
+    private fun getObjKeyFromUrl(url : String) : String{
+        return url.substringAfter(bucketName)
+        // example:  http://localhost:9000/imgboxes/2024-12-11T17:22:27Z-test.png
     }
 
 

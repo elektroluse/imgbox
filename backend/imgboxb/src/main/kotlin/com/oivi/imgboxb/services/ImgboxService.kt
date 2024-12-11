@@ -6,4 +6,6 @@ import org.springframework.web.multipart.MultipartFile
 interface ImgboxService {
 
     fun upload(imgBoxEntity: ImgBoxEntity, mf : MultipartFile) : ImgBoxEntity
+    fun getImgBox(id: Long): ImgBoxEntity
+    fun getImgboxesByUsername(username: String): List<ImgBoxEntity>
 }

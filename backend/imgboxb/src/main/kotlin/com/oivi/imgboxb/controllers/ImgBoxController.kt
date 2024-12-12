@@ -3,6 +3,7 @@ package com.oivi.imgboxb.controllers
 import com.oivi.imgboxb.domain.dto.ErrorDto
 import com.oivi.imgboxb.domain.dto.ImgBoxDto
 import com.oivi.imgboxb.domain.dto.ImgboxFormDto
+import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.exceptions.ImageUploadException
@@ -70,6 +71,15 @@ class ImgBoxController(
                 else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
+
+    }
+    @GetMapping(path = ["{username}/download"])
+    fun downloadImgBoxesByUsername(
+        @PathVariable("username") username : String) : ResponseEntity<List<ImgboxWithFileDto>>{
+            val result = imageboxService.packFileWithBox(
+                imageboxService.getImgboxesByUsername(username)
+            )
+        return ResponseEntity(result, HttpStatus.OK)
 
     }
 }

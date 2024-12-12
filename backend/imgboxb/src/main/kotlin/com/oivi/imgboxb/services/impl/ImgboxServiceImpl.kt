@@ -1,5 +1,6 @@
 package com.oivi.imgboxb.services.impl
 
+import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
 import com.oivi.imgboxb.domain.dto.UserDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
@@ -8,6 +9,8 @@ import com.oivi.imgboxb.repositories.ImgBoxRepository
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImageStorageService
 import com.oivi.imgboxb.services.ImgboxService
+import com.oivi.imgboxb.toImgBoxDtoSafe
+import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
@@ -48,5 +51,14 @@ class ImgboxServiceImpl(
 
          return imgBoxRepository.findAllByUserId(userId)
 
+    }
+    //override fun download
+
+    override fun packFileWithBox (imgboxes : List<ImgBoxEntity>) : List<ImgboxWithFileDto> {
+        return imgboxes.map {
+            ImgboxWithFileDto(
+                it.toImgBoxDtoSafe(),
+                IOUtils.toByteArray(imageStorageService.getInputStream(it.fileUrl)))
+        }
     }
 }

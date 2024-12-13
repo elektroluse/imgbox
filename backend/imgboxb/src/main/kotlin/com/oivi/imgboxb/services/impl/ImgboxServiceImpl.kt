@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.multipart.MultipartFile
+import java.io.InputStream
 
 @Service
 class ImgboxServiceImpl(
@@ -52,7 +53,10 @@ class ImgboxServiceImpl(
          return imgBoxRepository.findAllByUserId(userId)
 
     }
-    //override fun download
+    override fun downloadFile(objKey : String) : InputStream{
+
+        return imageStorageService.getInputStreamFromKey(objKey)
+    }
 
     override fun packFileWithBox (imgboxes : List<ImgBoxEntity>) : List<ImgboxWithFileDto> {
         return imgboxes.map {

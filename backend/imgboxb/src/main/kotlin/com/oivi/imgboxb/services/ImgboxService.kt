@@ -3,6 +3,7 @@ package com.oivi.imgboxb.services
 import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import org.springframework.web.multipart.MultipartFile
+import java.io.InputStream
 
 interface ImgboxService {
 
@@ -10,4 +11,5 @@ interface ImgboxService {
     fun getImgBox(id: Long): ImgBoxEntity
     fun getImgboxesByUsername(username: String): List<ImgBoxEntity>
     fun packFileWithBox(imgboxes: List<ImgBoxEntity>): List<ImgboxWithFileDto>
+    fun downloadFile(objKey: String): InputStream
 }

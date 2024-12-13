@@ -55,6 +55,17 @@ class ImageStorageServiceImpl @Autowired constructor(
         )
     }
 
+    override fun getInputStreamFromKey(objKey : String) : InputStream{
+
+        return minioClient.getObject(
+            GetObjectArgs
+                .builder()
+                .bucket(bucketName)
+                .`object`(objKey)
+                .build()
+        )
+    }
+
     private fun createBucketIfNotExist() : String {
 
         val bucketExists = minioClient.bucketExists(BucketExistsArgs.builder()

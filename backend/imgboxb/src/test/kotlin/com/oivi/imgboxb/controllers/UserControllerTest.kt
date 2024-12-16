@@ -33,7 +33,8 @@ class UserControllerTest @Autowired constructor (
     }
 
     val objectMapper : ObjectMapper = ObjectMapper();
-    @Test
+    // deprecated
+    /*@Test
     fun `test that create returns 201 on success`(){
         mockMvc.post("/v1/users"){
             contentType = MediaType.APPLICATION_JSON;
@@ -57,4 +58,7 @@ class UserControllerTest @Autowired constructor (
         val expected = testUser1.toUserEntity();
         verify{userService.create(expected)}
     }
+
+     */
 }
+

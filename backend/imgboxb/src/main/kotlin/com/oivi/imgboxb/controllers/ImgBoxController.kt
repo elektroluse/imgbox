@@ -129,7 +129,5 @@ class ImgBoxController(
             .headers(headers)
             .body(InputStreamResource(inputStream))
 
-
-
     }
 }

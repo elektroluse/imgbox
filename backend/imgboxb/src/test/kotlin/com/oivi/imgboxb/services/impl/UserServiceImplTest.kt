@@ -12,7 +12,8 @@ import org.springframework.data.repository.findByIdOrNull
 class UserServiceImplTest @Autowired constructor(
     private val underTest : UserServiceImpl,
     private val userRepository : UserRepository){
-
+    // deprecated
+    /*
     @Test
     fun`test that save stores the user in db`(){
         val savedUser = underTest.create(testUserEntityA())
@@ -24,5 +25,7 @@ class UserServiceImplTest @Autowired constructor(
         )
 
     }
+
+     */
 
 }

@@ -16,13 +16,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class UserController(private val userService : UserService) {
 
-    @PostMapping(path = ["v1/users"])
-    fun createUser(@RequestBody userDto : UserDto) : ResponseEntity<UserDto> {
-        val createdUser =  userService.create(userDto.toUserEntity())
-            .toUserDto()
-        return ResponseEntity(createdUser, HttpStatus.CREATED)
-
-    }
 
     @GetMapping(path = ["v1/users"])
     fun readManyUser() : ResponseEntity<List<UserProfile>>{

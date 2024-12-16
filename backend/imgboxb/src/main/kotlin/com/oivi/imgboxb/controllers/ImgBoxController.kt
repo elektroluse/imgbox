@@ -103,6 +103,31 @@ class ImgBoxController(
             .headers(headers)
             .body(byteArrayResource)
 
+    }
+
+    @GetMapping(path = ["alternate/{objectkey}"])
+    fun downloadImageAlt(@PathVariable("objectkey") objKey : String) : ResponseEntity<InputStreamResource> {
+
+        /*
+            NOTE :
+
+            Not sure whether the inputstream is closed appropriately,
+            but it seems to be the case
+            ref : https://stackoverflow.com/questions/48660011/how-to-handle-io-streams-in-spring-mvc/48660203#48660203
+
+            Not sure what the best way to return image data to client is currently, but for now
+            either bytearrayresource or inputstreamresource seems fine for files that are intended to be used in the
+            application
+
+         */
+
+        val inputStream = imageboxService.downloadFile(objKey)
+        val headers = HttpHeaders()
+        headers.contentType = MediaType.IMAGE_PNG
+
+        return ResponseEntity.ok()
+            .headers(headers)
+            .body(InputStreamResource(inputStream))
 
 
 

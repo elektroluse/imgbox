@@ -1,6 +1,6 @@
-import { UserType } from "../types/UserType";
+import { UserInfo } from "../types/UserInfo";
 
-export const dummyData : UserType[] = [
+export const dummyData : UserInfo[] = [
     {
         id : 1,
         username : "Oliver"

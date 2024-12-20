@@ -18,6 +18,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsUtils
+import org.springframework.web.cors.CorsUtils.isPreFlightRequest
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.servlet.HandlerExceptionResolver
 
 @Configuration
@@ -36,6 +40,8 @@ class SecurityConfig @Autowired constructor(
             authorizeHttpRequests {
                 authorize(AntPathRequestMatcher("/api/auth/register"), permitAll)
                 authorize(AntPathRequestMatcher("/api/auth/login"), permitAll)
+                authorize(AntPathRequestMatcher("/api/v1/users"), permitAll)
+
 
                 authorize(AntPathRequestMatcher("/api/secure/testuser"),  hasAuthority("USER"))
                 authorize(AntPathRequestMatcher("/api/secure/testadmin"),  hasAuthority("ADMIN"))
@@ -43,7 +49,9 @@ class SecurityConfig @Autowired constructor(
 
             }
 
+
             csrf { disable() }
+            cors { configurationSource = corsConfigurationSource() }
             exceptionHandling {
                     authenticationEntryPoint = authEntryPoint
             }
@@ -57,6 +65,16 @@ class SecurityConfig @Autowired constructor(
             addFilterBefore<UsernamePasswordAuthenticationFilter>(filter = jwtAuthenticationFilter())
         }
         return http.build()
+    }
+
+    @Bean
+    fun corsConfigurationSource() : UrlBasedCorsConfigurationSource{
+        val config = CorsConfiguration()
+        config.allowedOrigins = listOf("http://localhost:5173","https://localhost:5173", "http://localhost:8080")
+        config.allowedMethods = listOf("GET","POST","PUT","DELETE","OPTIONS")
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**",config)
+        return source
     }
 
     @Bean

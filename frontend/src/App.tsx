@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react'
 import { dummyData } from './data/dummyData'
 import DataTable from './components/DataTable/DataTable'
+import { UserInfo } from './types/UserInfo';
 //import './App.css'
+
+const BASE_URL = 'http://localhost:8080/api/v1'
 
 function App() {
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/v1/users",{method: "GET"})
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch(error => console.error(error))
-  }
+  
+  const [users, setUsers] = useState<UserInfo[]>([]);
 
-  )
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const response = await fetch(`${BASE_URL}/users`, {method : 'get'});
+      const users = (await response.json()) as UserInfo[];
+      setUsers(users);
+    };
+
+    fetchUsers()
+  }, [])
+   
 
   return (
     
@@ -20,7 +28,7 @@ function App() {
       <h1 className = "font-bold text-center"> USERS </h1>
       <div className="max-w-lg mx-auto bg-slate-100 rounded-md p-5">
         <div className='space-y-2'>
-            <DataTable data = {dummyData} />
+            <DataTable data = {users} />
             
         
         </div>

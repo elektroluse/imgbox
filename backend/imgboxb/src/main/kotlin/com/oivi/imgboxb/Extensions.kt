@@ -17,7 +17,8 @@ fun UserEntity.toUserDto() = UserDto(
     )
 
 fun UserEntity.toUserProfile() = UserProfile(
-    username = this.username
+    username = this.username,
+    id = this.id
 )
 
 fun UserDto.toUserEntity() = UserEntity(

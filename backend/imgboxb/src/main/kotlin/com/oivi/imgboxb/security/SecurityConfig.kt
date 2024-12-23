@@ -70,7 +70,7 @@ class SecurityConfig @Autowired constructor(
     @Bean
     fun corsConfigurationSource() : UrlBasedCorsConfigurationSource{
         val config = CorsConfiguration()
-        config.allowedOrigins = listOf("http://localhost:5173","https://localhost:5173", "http://localhost:8080")
+        config.allowedOrigins = listOf("http://localhost:5173","https://localhost:5173")
         config.allowedMethods = listOf("GET","POST","PUT","DELETE","OPTIONS")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**",config)

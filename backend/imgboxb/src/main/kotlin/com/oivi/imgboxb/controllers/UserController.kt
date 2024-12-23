@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
 class UserController(private val userService : UserService) {
 
 
-    @GetMapping(path = ["v1/users"])
+    @GetMapping(path = ["/api/v1/users"])
     fun readManyUser() : ResponseEntity<List<UserProfile>>{
           val result : List<UserProfile> =  userService.list().map{
              it.toUserProfile()

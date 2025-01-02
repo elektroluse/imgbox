@@ -1,5 +1,6 @@
 import { House } from 'lucide-react'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function MainNav() {
   return (
@@ -9,9 +10,9 @@ export default function MainNav() {
         </a>
         
         <nav className="flex items-center gap-3 ml-5">
-            <a href="/#/users">Users</a>
-            <a href="/#/tags">Tags</a>
-            <a href="/#/random">Random</a>
+            <Link to="/users" className="hover:bg-fuchsia-600">Users</Link>
+            <Link to="/tags">Tags</Link>
+            <Link to="/random">Random</Link>
         </nav>
     </div>
   )

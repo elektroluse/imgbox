@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import MainNav from "./MainNav";
 
 export default function Header(){
@@ -11,8 +12,8 @@ export default function Header(){
             
 
                 <h1 className="flex items-center gap-3 justify-end flex-1">
-                    <a href = "/login">Login</a>
-                    <a href = "/register"> Register</a>
+                    <Link to = "/login">Login</Link>
+                    <Link to = "/register"> Register</Link>
                 </h1>
             </div>
          

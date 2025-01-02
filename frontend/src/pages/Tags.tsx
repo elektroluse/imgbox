@@ -1,6 +1,6 @@
 import Header from "../components/Navbar/Header";
 
-export function Register(){
+export function Tags(){
 
     return(
         <>

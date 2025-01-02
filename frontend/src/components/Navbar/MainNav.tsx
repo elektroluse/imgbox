@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom'
 export default function MainNav() {
   return (
     <div className="flex">
-        <a href="/"> 
-            <House className="text-orange-500 ml-3" />
-        </a>
+        <Link to = "/"> 
+            <House className="text-orange-500 ml-3 hover:bg-slate-300" />
+        </Link>
         
         <nav className="flex items-center gap-3 ml-5">
             <Link to="/users" className="hover:bg-fuchsia-600">Users</Link>

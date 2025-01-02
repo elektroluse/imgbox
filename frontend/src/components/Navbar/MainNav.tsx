@@ -9,9 +9,9 @@ export default function MainNav() {
         </a>
         
         <nav className="flex items-center gap-3 ml-5">
-            <a href="/users">Users</a>
-            <a href="/tags">Tags</a>
-            <a href="/random">Random</a>
+            <a href="/#/users">Users</a>
+            <a href="/#/tags">Tags</a>
+            <a href="/#/random">Random</a>
         </nav>
     </div>
   )

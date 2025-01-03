@@ -46,10 +46,32 @@ export default function MyForm() {
 
   })
   
+
+
   
   function onSubmit(values: z.infer < typeof formSchema > ) {
+    
+    
+    const fetchUsers = async () => {
+        
+  
+        try{
+          const response = await fetch(`api/auth/register`, {method : 'POST', body : JSON.stringify(values)});
+          console.log(response.status)
+          console.log(response.json())
+        } catch (e) {
+          console.error(e)
+        }
+    }
+
+
+
     try {
       console.log(values);
+      fetchUsers()
+
+
+
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>

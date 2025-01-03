@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { dummyData } from '../data/dummyData'
 import DataTable from '../components/DataTable/DataTable'
 import { UserInfo } from '../types/UserInfo';
 import Header from '../components/Navbar/Header';

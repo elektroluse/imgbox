@@ -35,8 +35,8 @@ import {
 } from "../ui/password-input"
 
 const formSchema = z.object({
-  usernameFormField: z.string().min(3).max(20),
-  passwordFormField: z.string().min(3).max(72)
+  username: z.string().min(3).max(20),
+  password: z.string().min(3).max(72)
 });
 
 export default function MyForm() {
@@ -67,7 +67,7 @@ export default function MyForm() {
         
         <FormField
           control={form.control}
-          name="usernameFormField"
+          name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
@@ -86,7 +86,7 @@ export default function MyForm() {
         
         <FormField
           control={form.control}
-          name="passwordFormField"
+          name="password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Password</FormLabel>

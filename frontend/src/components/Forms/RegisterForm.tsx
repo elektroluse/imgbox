@@ -52,7 +52,7 @@ export default function MyForm() {
   function onSubmit(values: z.infer < typeof formSchema > ) {
     
     
-    const fetchUsers = async () => {
+    const sendRegistrationDto = async () => {
         
   
         try{
@@ -68,7 +68,7 @@ export default function MyForm() {
 
     try {
       console.log(values);
-      fetchUsers()
+      sendRegistrationDto();
 
 
 

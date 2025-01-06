@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
@@ -18,6 +19,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
+import org.springframework.security.web.util.matcher.RequestMatchers
+import org.springframework.util.AntPathMatcher
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsUtils
 import org.springframework.web.cors.CorsUtils.isPreFlightRequest
@@ -38,6 +41,8 @@ class SecurityConfig @Autowired constructor(
         http {
 
             authorizeHttpRequests {
+                
+                authorize(CorsUtils::isPreFlightRequest,permitAll)
                 authorize(AntPathRequestMatcher("/api/auth/register"), permitAll)
                 authorize(AntPathRequestMatcher("/api/auth/login"), permitAll)
                 authorize(AntPathRequestMatcher("/api/v1/users"), permitAll)
@@ -72,6 +77,7 @@ class SecurityConfig @Autowired constructor(
         val config = CorsConfiguration()
         config.allowedOrigins = listOf("http://localhost:5173","https://localhost:5173")
         config.allowedMethods = listOf("GET","POST","PUT","DELETE","OPTIONS")
+        config.allowedHeaders = listOf("authorization", "content-type")
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**",config)
         return source

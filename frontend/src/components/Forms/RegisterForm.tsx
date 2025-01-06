@@ -39,6 +39,8 @@ const formSchema = z.object({
   password: z.string().min(3).max(72)
 });
 
+const BASE_URL = 'http://localhost:8080/api/'
+
 export default function MyForm() {
 
   const form = useForm < z.infer < typeof formSchema >> ({
@@ -53,10 +55,18 @@ export default function MyForm() {
     
     
     const sendRegistrationDto = async () => {
-        
+        const header = new Headers();
+        header.append("Content-Type","application/json");
+        //header.append("Access-Control-Allow-Origin")
   
         try{
-          const response = await fetch(`api/auth/register`, {method : 'POST', body : JSON.stringify(values)});
+          const response = await fetch("http://localhost:8080/api/auth/register",
+             {method : 'POST',
+               body : JSON.stringify(values),
+               headers : header,
+               mode : "cors"
+               }
+            );
           console.log(response.status)
           console.log(response.json())
         } catch (e) {

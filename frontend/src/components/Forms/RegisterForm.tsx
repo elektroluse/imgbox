@@ -42,8 +42,13 @@ const formSchema = z.object({
 const BASE_URL = 'http://localhost:8080/api/'
 
 export default function MyForm() {
+  const [result,setResult] = useState("");
 
   const form = useForm < z.infer < typeof formSchema >> ({
+    defaultValues : {
+      username : "",
+      password : ""
+    },
     resolver: zodResolver(formSchema),
 
   })
@@ -52,7 +57,6 @@ export default function MyForm() {
 
   
   function onSubmit(values: z.infer < typeof formSchema > ) {
-    
     
     const sendRegistrationDto = async () => {
         const header = new Headers();
@@ -68,7 +72,15 @@ export default function MyForm() {
                }
             );
           console.log(response.status)
-          console.log(response.json())
+          console.log(response.text())
+          if(response.status == 201){
+
+            setResult("Sucessfully Registered user: " + values.username);
+          }
+          if(response.status == 400){
+            setResult("Username is already in use : " + values.username)
+          }
+         
         } catch (e) {
           console.error(e)
         }
@@ -77,7 +89,7 @@ export default function MyForm() {
 
 
     try {
-      console.log(values);
+    
       sendRegistrationDto();
 
 
@@ -132,7 +144,10 @@ export default function MyForm() {
         />
         
         <Button type="submit">Submit</Button>
+        <div>{result}</div>
+
       </form>
     </Form>
+    
   )
 }

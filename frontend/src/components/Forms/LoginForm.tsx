@@ -41,8 +41,8 @@ const formSchema = z.object({
 
 const BASE_URL = 'http://localhost:8080/api/'
 
-export default function MyForm() {
-  const [regResult,setRegResult] = useState("");
+export default function LoginForm() {
+  const [isLoggedIn,setIsLoggedIn] = useState("");
   const [success,setSuccess] = useState(false)
 
   const form = useForm < z.infer < typeof formSchema >> ({
@@ -59,13 +59,13 @@ export default function MyForm() {
   
   function onSubmit(values: z.infer < typeof formSchema > ) {
     
-    const sendRegistrationDto = async () => {
+    const sendLoginDto = async () => {
         const header = new Headers();
         header.append("Content-Type","application/json");
         //header.append("Access-Control-Allow-Origin")
   
         try{
-          const response = await fetch("http://localhost:8080/api/auth/register",
+          const response = await fetch("http://localhost:8080/api/auth/login",
              {method : 'POST',
                body : JSON.stringify(values),
                headers : header,
@@ -74,13 +74,14 @@ export default function MyForm() {
             );
           console.log(response.status)
           console.log(response.text())
-          if(response.status == 201){
+          const responseToken = response.json().then(value => value.accesToken);
+          if(response.status == 200){
 
-            setRegResult("Sucessfully Registered user: " + values.username);
+            setIsLoggedIn("Login successful : " + values.username + "\n" + responseToken);
             setSuccess(true);
           }
-          if(response.status == 400){
-            setRegResult("Username is already in use : " + values.username)
+          else{
+            setIsLoggedIn("Login failed : " + values.username);
             setSuccess(false);
           }
          
@@ -93,7 +94,7 @@ export default function MyForm() {
 
     try {
     
-      sendRegistrationDto();
+      sendLoginDto();
 
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
@@ -118,7 +119,7 @@ export default function MyForm() {
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input 
-                placeholder="Enter your desired username"
+                placeholder="Enter your username"
                 
                 type="text"
                 {...field} />
@@ -144,9 +145,9 @@ export default function MyForm() {
           )}
         />
         
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Log in</Button>
         <div>
-          <p className={`underline ${success ? "text-green-800" : "text-red-700"} ` }>{regResult}</p>
+          <p className={`underline ${success ? "text-green-800" : "text-red-700"} ` }>{isLoggedIn}</p>
           </div>
 
       </form>

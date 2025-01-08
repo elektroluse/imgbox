@@ -43,6 +43,7 @@ const BASE_URL = 'http://localhost:8080/api/'
 
 export default function MyForm() {
   const [result,setResult] = useState("");
+  const [success,setSuccess] = useState(false)
 
   const form = useForm < z.infer < typeof formSchema >> ({
     defaultValues : {
@@ -76,9 +77,11 @@ export default function MyForm() {
           if(response.status == 201){
 
             setResult("Sucessfully Registered user: " + values.username);
+            setSuccess(true);
           }
           if(response.status == 400){
             setResult("Username is already in use : " + values.username)
+            setSuccess(false);
           }
          
         } catch (e) {
@@ -91,8 +94,6 @@ export default function MyForm() {
     try {
     
       sendRegistrationDto();
-
-
 
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
@@ -144,7 +145,9 @@ export default function MyForm() {
         />
         
         <Button type="submit">Submit</Button>
-        <div>{result}</div>
+        <div>
+          <p className={`underline ${success ? "text-green-800" : "text-red-700"} ` }>{result}</p>
+          </div>
 
       </form>
     </Form>

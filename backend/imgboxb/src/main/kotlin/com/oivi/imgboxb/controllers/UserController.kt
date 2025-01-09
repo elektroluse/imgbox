@@ -8,6 +8,7 @@ import com.oivi.imgboxb.toUserEntity
 import com.oivi.imgboxb.toUserProfile
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
@@ -23,5 +24,10 @@ class UserController(private val userService : UserService) {
              it.toUserProfile()
          }
         return ResponseEntity(result, HttpStatus.OK);
+    }
+    @GetMapping(path = ["/api/v1/me"])
+    fun readCurrentUser(authentication : Authentication) : ResponseEntity<UserProfile>{
+        val loggedInUser = userService.getUser(authentication.name)
+        return ResponseEntity(loggedInUser.toUserProfile(),HttpStatus.OK)
     }
 }

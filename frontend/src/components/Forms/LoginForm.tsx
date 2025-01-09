@@ -33,6 +33,7 @@ import {
 import {
   PasswordInput
 } from "../ui/password-input"
+import { LoginResponseDto } from "../../types/LoginResponseDto"
 
 const formSchema = z.object({
   username: z.string().min(3).max(20),
@@ -72,12 +73,11 @@ export default function LoginForm() {
                mode : "cors"
                }
             );
-          console.log(response.status)
-          console.log(response.text())
-          const responseToken = response.json().then(value => value.accesToken);
+          
           if(response.status == 200){
 
-            setIsLoggedIn("Login successful : " + values.username + "\n" + responseToken);
+            const serverResponse : LoginResponseDto =  await response.json();
+            setIsLoggedIn("Login successful : " + values.username + "\n Access token : \n" + serverResponse.accessToken);
             setSuccess(true);
           }
           else{

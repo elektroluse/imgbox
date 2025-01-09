@@ -77,8 +77,12 @@ export default function LoginForm() {
           if(response.status == 200){
 
             const serverResponse : LoginResponseDto =  await response.json();
-            setIsLoggedIn("Login successful : " + values.username + "\n Access token : \n" + serverResponse.accessToken);
+            setIsLoggedIn("Login successful : " + values.username);
             setSuccess(true);
+            localStorage.setItem("accessToken", serverResponse.accessToken);
+            localStorage.setItem("tokenType", serverResponse.tokenType);
+            console.log(localStorage.getItem("accessToken"));
+            console.log(localStorage.getItem("tokenType"));
           }
           else{
             setIsLoggedIn("Login failed : " + values.username);

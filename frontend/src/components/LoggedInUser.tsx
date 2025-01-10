@@ -5,8 +5,10 @@ export default function LoggedInUser(){
 
     const BASE_URL = 'http://localhost:8080/api/v1'
     const [user, setUser] = useState<UserInfo>();
+    const[loggedIn, setLoggedIn] = useState(false);
+    const[username, setUsername] = useState("");
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchUser = async () => {
           //setIsLoading(true);
           const header = new Headers();
           header.append("Authorization", "Bearer " + localStorage.getItem("accessToken"));
@@ -16,20 +18,32 @@ export default function LoggedInUser(){
                 method : 'get',
                 headers : header
             });
-            const userInfo = await (response.json()) as UserInfo
-            setUser(userInfo)
+            const userInfo = await (response.json()) as UserInfo 
+            setUser(userInfo);
+            setUsername(userInfo.username);
+            if(response.status != 200){
+               
+              setUsername(" you are not logged in");
+              
+            }
+            setLoggedIn(true);
+          
           } catch (e : any) {
             //setError(e)
           } finally{
             console.log("sfsdf")
           }
-                
-    
           
         };
     
-        fetchUsers()
+        fetchUser()
       }, [])
+
+      return(
+        <div> 
+          <h1 className="text-bold text-lg"> Welcome {username}</h1>
+        </div>
+      )
 
 
 }

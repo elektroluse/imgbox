@@ -1,3 +1,4 @@
+import LoggedInUser from "../components/LoggedInUser"
 import Header from "../components/Navbar/Header"
 
 export function Home(){
@@ -6,6 +7,7 @@ export function Home(){
         <>
             <Header/>
             <h1> THIS IS HOME </h1>
+            <LoggedInUser />
         </>
     )
 }

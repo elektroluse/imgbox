@@ -1,7 +1,6 @@
 export interface LoginResponseDto{
-    httpStatus : string,
     message : string,
-    completed : boolean,
+    authenticated : boolean,
     accessToken : string,
     tokenType : string
 

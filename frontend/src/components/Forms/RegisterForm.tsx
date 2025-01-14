@@ -33,6 +33,7 @@ import {
 import {
   PasswordInput
 } from "../ui/password-input"
+import { useAuth } from "../../services/AuthProvider"
 
 const formSchema = z.object({
   username: z.string().min(3).max(20),
@@ -42,6 +43,7 @@ const formSchema = z.object({
 const BASE_URL = 'http://localhost:8080/api/'
 
 export default function MyForm() {
+  const auth = useAuth();
   const [regResult,setRegResult] = useState("");
   const [success,setSuccess] = useState(false)
 
@@ -59,41 +61,9 @@ export default function MyForm() {
   
   function onSubmit(values: z.infer < typeof formSchema > ) {
     
-    const sendRegistrationDto = async () => {
-        const header = new Headers();
-        header.append("Content-Type","application/json");
-        //header.append("Access-Control-Allow-Origin")
-  
-        try{
-          const response = await fetch("http://localhost:8080/api/auth/register",
-             {method : 'POST',
-               body : JSON.stringify(values),
-               headers : header,
-               mode : "cors"
-               }
-            );
-          console.log(response.status)
-          console.log(response.text())
-          if(response.status == 201){
-
-            setRegResult("Sucessfully Registered user: " + values.username);
-            setSuccess(true);
-          }
-          if(response.status == 400){
-            setRegResult("Username is already in use : " + values.username)
-            setSuccess(false);
-          }
-         
-        } catch (e) {
-          console.error(e)
-        }
-    }
-
-
-
     try {
     
-      sendRegistrationDto();
+      auth.register(values);
 
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
@@ -105,6 +75,7 @@ export default function MyForm() {
       toast.error("Failed to submit the form. Please try again.");
     }
   }
+  
 
   return (
     <Form {...form}>

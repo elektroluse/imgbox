@@ -9,6 +9,7 @@ import Users from './pages/Users';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Tags } from './pages/Tags';
+import AuthProvider from './services/AuthProvider';
 //import './App.css'
 
 const BASE_URL = 'http://localhost:8080/api/v1';
@@ -17,14 +18,16 @@ function App() {
   return(
 
     <HashRouter>
-      <Routes>
-        <Route path="/" element = {<Home />} />
-        <Route path="/users" element = {<Users />} />
-        <Route path="/tags" element = {<Tags />} /> 
-        <Route path="/login" element = {<Login />} /> 
-        <Route path="/register" element = {<Register />} /> 
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element = {<Home />} />
+          <Route path="/users" element = {<Users />} />
+          <Route path="/tags" element = {<Tags />} /> 
+          <Route path="/login" element = {<Login />} /> 
+          <Route path="/register" element = {<Register />} /> 
 
-      </Routes>
+        </Routes>
+      </AuthProvider>
     </HashRouter>
   )
 

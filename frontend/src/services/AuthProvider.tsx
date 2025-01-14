@@ -1,22 +1,20 @@
 import { useContext, createContext, useState } from "react";
-import { z, ZodTypeAny } from "zod";
 import { LoginResponseDto } from "../types/LoginResponseDto";
 
-const formSchema = z.object({
-    username: z.string().min(3).max(20),
-    password: z.string().min(3).max(72)
-  });
-  
 
 
 interface ProviderProps {
-    user:  string | null,
-    token:  string,
-    register(values : typeof formSchema) : void,
-    login (values : typeof formSchema): void,
-    logout() :void
+    user: string | null,
+    token: string,
+    register(values : userAuthRequestDto) : void,
+    login (values : userAuthRequestDto): void,
+    logout(): void
 }
 
+type userAuthRequestDto = {
+  username : string,
+  password : string
+}
 
 const AuthContext = createContext<ProviderProps>({
     user: null,
@@ -32,7 +30,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode}) => {
     const [token, setToken ] = useState(storedInfo?.token || "");
     const [message, setMessage] = useState("");
 
-    const register = async (values : z.infer < typeof formSchema >) => {
+    const register = async (values : userAuthRequestDto) => {
         const header = new Headers();
         header.append("Content-Type","application/json");
         //header.append("Access-Control-Allow-Origin")
@@ -60,7 +58,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode}) => {
         }
     }
 
-    const login = async (values: z.infer < typeof formSchema > ) => {
+    const login = async (values : userAuthRequestDto) => {
 
         const header = new Headers();
         header.append("Content-Type","application/json");

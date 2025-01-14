@@ -53,7 +53,7 @@ class AuthController(
             val message = "Created user with name : " + savedUser.username + " (" + savedUser.id +")"
 
             return ResponseEntity<RegistrationResponseDto>(
-                RegistrationResponseDto(savedUser.username,message), HttpStatus.CREATED)
+                RegistrationResponseDto(savedUser.username,message, true), HttpStatus.CREATED)
 
         } catch (e : Exception){
 

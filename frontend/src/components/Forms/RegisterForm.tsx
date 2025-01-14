@@ -34,6 +34,8 @@ import {
   PasswordInput
 } from "../ui/password-input"
 import { useAuth } from "../../services/AuthProvider"
+import {sendRegisterDto} from "../../services/AuthHelper"
+import { RegisterResponseDto } from "../../types/RegisterResponseDto"
 
 const formSchema = z.object({
   username: z.string().min(3).max(20),
@@ -43,8 +45,7 @@ const formSchema = z.object({
 const BASE_URL = 'http://localhost:8080/api/'
 
 export default function MyForm() {
-  const auth = useAuth();
-  const [regResult,setRegResult] = useState("");
+  const [message,setMessage] = useState("");
   const [success,setSuccess] = useState(false)
 
   const form = useForm < z.infer < typeof formSchema >> ({
@@ -60,10 +61,24 @@ export default function MyForm() {
 
   
   function onSubmit(values: z.infer < typeof formSchema > ) {
-    
+      
+    const sendRegRequest = async () =>{
+        const response = await (sendRegisterDto(values)) as RegisterResponseDto;
+        if(response.completed){
+          setSuccess(true);
+          setMessage(response.message);
+          
+        }
+        else{
+          setSuccess(false);
+          setMessage(response.message);
+        }
+      }
     try {
-    
-      auth.register(values);
+      
+      
+      sendRegRequest();
+      
 
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
@@ -117,7 +132,7 @@ export default function MyForm() {
         
         <Button type="submit">Submit</Button>
         <div>
-          <p className={`underline ${success ? "text-green-800" : "text-red-700"} ` }>{regResult}</p>
+          <p className={`underline ${success ? "text-green-800" : "text-red-700"} ` }>{message}</p>
           </div>
 
       </form>

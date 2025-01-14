@@ -34,6 +34,8 @@ import {
   PasswordInput
 } from "../ui/password-input"
 import { LoginResponseDto } from "../../types/LoginResponseDto"
+import { useAuth } from "../../services/AuthProvider"
+import { sendLoginDto } from "../../services/AuthHelper"
 
 const formSchema = z.object({
   username: z.string().min(3).max(20),
@@ -43,8 +45,9 @@ const formSchema = z.object({
 const BASE_URL = 'http://localhost:8080/api/'
 
 export default function LoginForm() {
-  const [isLoggedIn,setIsLoggedIn] = useState("");
-  const [success,setSuccess] = useState(false)
+  const [message, setMessage] = useState("");
+  const [success,setSuccess] = useState(false);
+  const auth = useAuth();
 
   const form = useForm < z.infer < typeof formSchema >> ({
     defaultValues : {
@@ -59,47 +62,25 @@ export default function LoginForm() {
 
   
   function onSubmit(values: z.infer < typeof formSchema > ) {
-    
-    const sendLoginDto = async () => {
-        const header = new Headers();
-        header.append("Content-Type","application/json");
-        //header.append("Access-Control-Allow-Origin")
-  
-        try{
-          const response = await fetch("http://localhost:8080/api/auth/login",
-             {method : 'POST',
-               body : JSON.stringify(values),
-               headers : header,
-               mode : "cors"
-               }
-            );
-          
-          if(response.status == 200){
+    const sendLoginRequest = async () =>{
+        const response = await (sendLoginDto(values)) as LoginResponseDto;
+        setMessage(response.message);
 
-            const serverResponse : LoginResponseDto =  await response.json();
-            setIsLoggedIn("Login successful : " + values.username);
-            setSuccess(true);
-            localStorage.setItem("accessToken", serverResponse.accessToken);
-            localStorage.setItem("tokenType", serverResponse.tokenType);
-            console.log(localStorage.getItem("accessToken"));
-            console.log(localStorage.getItem("tokenType"));
-          }
-          else{
-            setIsLoggedIn("Login failed : " + values.username);
-            setSuccess(false);
-          }
-         
-        } catch (e) {
-          console.error(e)
+        if(response.authenticated){
+          setSuccess(true);
+          auth.login(
+            {
+              username : values.username,
+              token : response.accessToken
+            });
+        }
+        else{
+          setSuccess(false);
         }
     }
-
-
-
     try {
-    
-      sendLoginDto();
-
+      sendLoginRequest();
+      
       toast(
         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
           <code className="text-white">{JSON.stringify(values, null, 2)}</code>
@@ -145,13 +126,13 @@ export default function LoginForm() {
               </FormControl>
               <FormDescription>Enter your password.</FormDescription>
               <FormMessage />
-            </FormItem>
+            </FormItem> 
           )}
         />
         
         <Button type="submit">Log in</Button>
         <div>
-          <p className={`underline ${success ? "text-green-800" : "text-red-700"} ` }>{isLoggedIn}</p>
+          <p className="underline bold">{isLoggedIn}</p>
           </div>
 
       </form>

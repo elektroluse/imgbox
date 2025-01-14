@@ -1,5 +1,6 @@
 
 export type RegisterResponseDto = {
     username : string,  
-    message : string
+    message : string,
+    completed : boolean
 };

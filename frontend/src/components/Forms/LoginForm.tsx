@@ -132,7 +132,7 @@ export default function LoginForm() {
         
         <Button type="submit">Log in</Button>
         <div>
-          <p className="underline bold">{isLoggedIn}</p>
+          <p className="underline bold">{message}</p>
           </div>
 
       </form>

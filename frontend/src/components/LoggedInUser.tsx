@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { UserInfo } from "../types/UserInfo";
+import { useAuth } from "../services/AuthProvider";
 
 export default function LoggedInUser(){
 
@@ -7,11 +8,13 @@ export default function LoggedInUser(){
     const [user, setUser] = useState<UserInfo>();
     const[loggedIn, setLoggedIn] = useState(false);
     const[username, setUsername] = useState("");
+    const auth = useAuth();
     useEffect(() => {
         const fetchUser = async () => {
           //setIsLoading(true);
           const header = new Headers();
-          header.append("Authorization", "Bearer " + localStorage.getItem("accessToken"));
+          header.append("Authorization", "Bearer " + auth.token);
+          console.log(header.get("Authorization"));
             
           try{
             const response = await fetch(`${BASE_URL}/me`, {
@@ -23,10 +26,14 @@ export default function LoggedInUser(){
             setUsername(userInfo.username);
             if(response.status != 200){
                
-              setUsername(" you are not logged in");
+              setUsername("You are not logged in or token has expired");
+              setLoggedIn(false);
               
             }
-            setLoggedIn(true);
+            if(response.status == 200){
+              setUsername(user!!.username);
+              setLoggedIn(true);
+            }
           
           } catch (e : any) {
             //setError(e)

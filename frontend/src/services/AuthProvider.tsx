@@ -24,7 +24,7 @@ const AuthContext = createContext<ProviderProps>({
 
 const AuthProvider = ({ children }: { children: React.ReactNode}) => {
     const storedInfo =  localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : null;
-    const [user, setUser ] = useState<string | null>(storedInfo?.user);
+    const [user, setUser ] = useState(storedInfo?.username || "");
     const [token, setToken ] = useState(storedInfo?.token || "");
 
    
@@ -42,6 +42,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode}) => {
         setUser(null);
         setToken("");
         localStorage.removeItem("user");
+        console.log("Auth provider --> Logged out")
     }
     return (
         <AuthContext.Provider value={{user,token, login, logout}}>

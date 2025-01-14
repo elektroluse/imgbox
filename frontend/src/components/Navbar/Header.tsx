@@ -17,15 +17,21 @@ export default function Header(){
             
 
                 <h1 className="flex items-center gap-3 justify-end flex-1">
+                    
                     {auth.token.length === 0 &&
-                        <Link to = "/login">Login</Link> && 
-                        <Link to = "/register"> Register</Link>
+                        <>
+                            <Link to = "/login">Login</Link> 
+                            <Link to = "/register"> Register</Link>
+                        </>
                     }
                     
                     {auth.token.length > 0 &&
-                        <Link to = "/me">{auth.user}</Link> &&
-                        <Link to = "/logout">Log out</Link>
+                        <>
+                            <Link to = "/">{auth.user}</Link> 
+                            <button onClick={auth.logout}>Log out</button>
+                        </>
                     }
+                    
                 </h1>
             </div>
          

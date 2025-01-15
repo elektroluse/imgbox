@@ -1,5 +1,6 @@
 import { useContext, createContext, useState } from "react";
 import { LoginResponseDto } from "../types/LoginResponseDto";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -26,6 +27,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode}) => {
     const storedInfo =  localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') || '{}') : null;
     const [user, setUser ] = useState(storedInfo?.username || "");
     const [token, setToken ] = useState(storedInfo?.token || "");
+    const navigate = useNavigate();
 
    
 
@@ -35,6 +37,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode}) => {
       localStorage.setItem("user", JSON.stringify(userObj));
       setUser(userObj.username);
       setToken(token);
+      navigate("/");
+      navigate(0);
     
     }
 
@@ -42,7 +46,9 @@ const AuthProvider = ({ children }: { children: React.ReactNode}) => {
         setUser(null);
         setToken("");
         localStorage.removeItem("user");
-        console.log("Auth provider --> Logged out")
+        navigate("/");
+        navigate(0);
+        console.log("Auth provider --> Logged out");
     }
     return (
         <AuthContext.Provider value={{user,token, login, logout}}>

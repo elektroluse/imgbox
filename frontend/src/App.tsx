@@ -10,6 +10,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Tags } from './pages/Tags';
 import AuthProvider from './services/AuthProvider';
+import { Upload } from './pages/Upload';
 //import './App.css'
 
 const BASE_URL = 'http://localhost:8080/api/v1';
@@ -24,7 +25,8 @@ function App() {
           <Route path="/users" element = {<Users />} />
           <Route path="/tags" element = {<Tags />} /> 
           <Route path="/login" element = {<Login />} /> 
-          <Route path="/register" element = {<Register />} /> 
+          <Route path="/register" element = {<Register />} />
+          <Route path="/upload" element = {<Upload />} />  
 
         </Routes>
       </AuthProvider>

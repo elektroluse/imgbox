@@ -66,7 +66,10 @@ export default function ImgboxUploadForm() {
   const form = useForm < z.infer < typeof formSchema >> ({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      "tags": ["test"]
+      "tags": ["test"],
+      "title": "",
+      "description": "",
+      "fileInput" : ""
     },
   })
 

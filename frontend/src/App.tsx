@@ -11,14 +11,16 @@ import { Register } from './pages/Register';
 import { Tags } from './pages/Tags';
 import AuthProvider from './services/AuthProvider';
 import { Upload } from './pages/Upload';
+import { Toaster } from 'sonner';
 //import './App.css'
 
 const BASE_URL = 'http://localhost:8080/api/v1';
 
 function App() {
   return(
-
+    
     <HashRouter>
+      <Toaster />
       <AuthProvider>
         <Routes>
           <Route path="/" element = {<Home />} />

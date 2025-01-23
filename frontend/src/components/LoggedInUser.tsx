@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { UserInfo } from "../types/UserInfo";
 import { useAuth } from "../services/AuthProvider";
+import { toast } from "sonner";
 
 export default function LoggedInUser(){
 
@@ -15,31 +16,38 @@ export default function LoggedInUser(){
           const header = new Headers();
           header.append("Authorization", "Bearer " + auth.token);
           console.log(header.get("Authorization"));
+          let statusCode : number = -1;
             
           try{
             const response = await fetch(`${BASE_URL}/me`, {
                 method : 'get',
                 headers : header
             });
+            statusCode = response.status;
             const userInfo = await (response.json()) as UserInfo 
             setUser(userInfo);
             setUsername(userInfo.username);
-            if(response.status != 200){
-               
+            if(statusCode != 200){
               setUsername("You are not logged in or token has expired");
               setLoggedIn(false);
+              toast.error("You are not logged in or token has expired!");
               
             }
-            if(response.status == 200){
-              setUsername(user!!.username);
+            if(statusCode == 200){
               setLoggedIn(true);
+              toast.success("You are logged in!");
             }
           
           } catch (e : any) {
             //setError(e)
-          } finally{
-            console.log("sfsdf")
-          }
+            if(statusCode === 401){
+              setUsername("You are not logged in or token has expired");
+              setLoggedIn(false);
+              toast.error("You are not logged in or token has expired!");
+            }
+            console.log("WHAT????")
+            console.log(e);
+          } 
           
         };
     

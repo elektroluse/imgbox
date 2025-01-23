@@ -62,7 +62,7 @@ export default function LoginForm() {
 
   
   function onSubmit(values: z.infer < typeof formSchema > ) {
-    const sendLoginRequest = async () =>{
+    const sendLoginRequest = async () => {
         const response = await (sendLoginDto(values)) as LoginResponseDto;
         setMessage(response.message);
 
@@ -73,19 +73,17 @@ export default function LoginForm() {
               username : values.username,
               token : response.accessToken
             });
+            //toast.success("Login successful !");
         }
         else{
           setSuccess(false);
+          toast.error("Login failed !");
         }
     }
     try {
       sendLoginRequest();
       
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
+      
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");

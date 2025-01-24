@@ -122,7 +122,7 @@ export default function MyForm() {
           )}
         />
         
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Register</Button>
         <div>
           <p className={`underline ${success ? "text-green-800" : "text-red-700"} ` }>{message}</p>
           </div>

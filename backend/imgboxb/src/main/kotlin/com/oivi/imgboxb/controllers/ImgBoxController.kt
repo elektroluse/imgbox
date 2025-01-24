@@ -1,9 +1,6 @@
 package com.oivi.imgboxb.controllers
 
-import com.oivi.imgboxb.domain.dto.ErrorDto
-import com.oivi.imgboxb.domain.dto.ImgBoxDto
-import com.oivi.imgboxb.domain.dto.ImgboxFormDto
-import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
+import com.oivi.imgboxb.domain.dto.*
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.exceptions.ImageUploadException
@@ -13,6 +10,7 @@ import com.oivi.imgboxb.services.UserService
 import com.oivi.imgboxb.toImgBoxDto
 import com.oivi.imgboxb.toImgBoxDtoSafe
 import com.oivi.imgboxb.toImgBoxEntity
+import io.minio.messages.Upload
 import org.apache.commons.io.IOUtils
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.InputStreamResource
@@ -47,20 +45,24 @@ class ImgBoxController(
         authentication : Authentication,
         @RequestPart("file") mf : MultipartFile,
         @RequestPart("imgboxdto") imgboxDto : ImgboxFormDto
-    ): ResponseEntity<String>
+    ): ResponseEntity<UploadResponseDto>
     {
         val principalUsername = authentication.name
 
         try {
             val userEntity : UserEntity = userService.getUser(principalUsername)
             val createdImgBoxEntity = imageboxService.upload(imgboxDto.toImgBoxEntity(userEntity), mf)
-            return ResponseEntity<String>("Imgbox with id : " + createdImgBoxEntity.id, HttpStatus.CREATED )
+            val responseDto = UploadResponseDto("Imgbox with id : " + createdImgBoxEntity.id);
+            return ResponseEntity<UploadResponseDto>(responseDto, HttpStatus.CREATED )
 
         } catch (e : Exception){
             return when(e){
-                is UsernameNotFoundException -> ResponseEntity<String>(e.message, HttpStatus.BAD_REQUEST)
-                is ImageUploadException -> ResponseEntity<String>(e.message, HttpStatus.BAD_REQUEST)
-                else -> ResponseEntity<String>("Unexpected exception", HttpStatus.INTERNAL_SERVER_ERROR)
+                is UsernameNotFoundException -> ResponseEntity<UploadResponseDto>(
+                    UploadResponseDto(e.message), HttpStatus.BAD_REQUEST)
+                is ImageUploadException -> ResponseEntity<UploadResponseDto>(
+                    UploadResponseDto(e.message), HttpStatus.BAD_REQUEST)
+                else -> ResponseEntity<UploadResponseDto>(
+                    UploadResponseDto("Unexpected exception"), HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
     }

@@ -20,7 +20,7 @@ function App() {
   return(
     
     <HashRouter>
-      <Toaster />
+      <Toaster richColors/>
       <AuthProvider>
         <Routes>
           <Route path="/" element = {<Home />} />

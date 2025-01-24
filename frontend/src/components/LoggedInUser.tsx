@@ -45,8 +45,7 @@ export default function LoggedInUser(){
               setLoggedIn(false);
               toast.error("You are not logged in or token has expired!");
             }
-            console.log("WHAT????")
-            console.log(e);
+            setUsername("Backend is not up");
           } 
           
         };
@@ -56,7 +55,7 @@ export default function LoggedInUser(){
 
       return(
         <div> 
-          <h1 className="text-bold text-lg"> Welcome {username}</h1>
+          <h1 className="text-bold text-lg"> Welcome :  {username}</h1>
         </div>
       )
 

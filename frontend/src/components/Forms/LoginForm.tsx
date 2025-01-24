@@ -12,9 +12,7 @@ import {
   zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import {
-  cn
-} from "../../lib/utils"
+
 import {
   Button
 } from "../ui/button"
@@ -42,11 +40,11 @@ const formSchema = z.object({
   password: z.string().min(3).max(72)
 });
 
-const BASE_URL = 'http://localhost:8080/api/'
+//const BASE_URL = 'http://localhost:8080/api/'
 
 export default function LoginForm() {
   const [message, setMessage] = useState("");
-  const [success,setSuccess] = useState(false);
+  //const [success,setSuccess] = useState(false);
   const auth = useAuth();
 
   const form = useForm < z.infer < typeof formSchema >> ({
@@ -67,7 +65,6 @@ export default function LoginForm() {
         setMessage(response.message);
 
         if(response.authenticated){
-          setSuccess(true);
           auth.login(
             {
               username : values.username,
@@ -76,7 +73,7 @@ export default function LoginForm() {
             //toast.success("Login successful !");
         }
         else{
-          setSuccess(false);
+          
           toast.error("Login failed !");
         }
     }

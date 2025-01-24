@@ -12,9 +12,7 @@ import {
   zodResolver
 } from "@hookform/resolvers/zod"
 import * as z from "zod"
-import {
-  cn
-} from "../../lib/utils"
+
 import {
   Button
 } from "../ui/button"
@@ -33,7 +31,6 @@ import {
 import {
   PasswordInput
 } from "../ui/password-input"
-import { useAuth } from "../../services/AuthProvider"
 import {sendRegisterDto} from "../../services/AuthHelper"
 import { RegisterResponseDto } from "../../types/RegisterResponseDto"
 
@@ -42,7 +39,7 @@ const formSchema = z.object({
   password: z.string().min(3).max(72)
 });
 
-const BASE_URL = 'http://localhost:8080/api/'
+//const BASE_URL = 'http://localhost:8080/api/'
 
 export default function MyForm() {
   const [message,setMessage] = useState("");
@@ -80,11 +77,6 @@ export default function MyForm() {
       sendRegRequest();
       
 
-      toast(
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-        </pre>
-      );
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");

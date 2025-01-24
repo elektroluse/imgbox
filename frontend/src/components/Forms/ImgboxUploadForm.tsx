@@ -46,6 +46,9 @@ import {
   FileUploaderContent,
   FileUploaderItem
 } from "../../components/ui/file-upload"
+import { sendUploadDto } from "../../services/AuthHelper"
+import { UploadResponseDto } from "../../types/UploadResponseDto"
+import { useAuth } from "../../services/AuthProvider"
 
 
 const MAX_FILE_SIZE = 1000000 // 1MB
@@ -70,8 +73,10 @@ const formSchema = z.object({
   })
   .nullable(),
 });
-export default function ImgboxUploadForm() {
 
+
+export default function ImgboxUploadForm() {
+  const auth = useAuth();
   //const [files, setFiles] = useState < File[] | null > ([]);
   
   const dropZoneConfig = {
@@ -90,13 +95,35 @@ export default function ImgboxUploadForm() {
     },
   })
 
+  
+
 
    function onSubmit(values: z.infer < typeof formSchema > ) {
+    
+    const sendUploadRequest = async () => {
+      const serverResponse = await (sendUploadDto(values, auth.token, auth.user!)) as UploadResponseDto;
+      if(serverResponse.success){
+        toast.success(serverResponse.message);
+      } 
+      else{
+        toast.error(serverResponse.message);
+      }
+      
+    }
+
     try {
       
-      console.log(values);
+      sendUploadRequest();
+      
+      
      
-    } catch (error) {}
+    } catch (e : any) {
+      console.log(e);
+      toast.error(e);
+    }
+      
+      
+      
       
   }
 

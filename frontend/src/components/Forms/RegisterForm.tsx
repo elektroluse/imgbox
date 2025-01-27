@@ -64,11 +64,12 @@ export default function MyForm() {
         if(response.completed){
           setSuccess(true);
           setMessage(response.message);
-          
+          toast.success(response.message);
         }
         else{
           setSuccess(false);
           setMessage(response.message);
+          toast.error(response.message);
         }
       }
     try {

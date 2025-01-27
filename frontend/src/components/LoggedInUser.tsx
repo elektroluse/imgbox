@@ -44,8 +44,10 @@ export default function LoggedInUser(){
               setUsername("You are not logged in or token has expired");
               setLoggedIn(false);
               toast.error("You are not logged in or token has expired!");
+            }else{
+              setUsername("Backend is not up");
             }
-            setUsername("Backend is not up");
+            
           } 
           
         };

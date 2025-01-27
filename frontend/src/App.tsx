@@ -12,6 +12,7 @@ import { Tags } from './pages/Tags';
 import AuthProvider from './services/AuthProvider';
 import { Upload } from './pages/Upload';
 import { Toaster } from 'sonner';
+import UserProfile from './pages/UserProfile';
 //import './App.css'
 
 const BASE_URL = 'http://localhost:8080/api/v1';
@@ -28,7 +29,8 @@ function App() {
           <Route path="/tags" element = {<Tags />} /> 
           <Route path="/login" element = {<Login />} /> 
           <Route path="/register" element = {<Register />} />
-          <Route path="/upload" element = {<Upload />} />  
+          <Route path="/upload" element = {<Upload />} />
+          <Route path="user/:username" element = {<UserProfile />} />  
 
         </Routes>
       </AuthProvider>

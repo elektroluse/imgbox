@@ -1,4 +1,5 @@
 import { ImgboxDto } from "../../types/ImgboxDto";
+import { Badge } from "../ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 
 interface ImgboxTableProps {
@@ -22,9 +23,11 @@ const ImgboxTable = ({data} : ImgboxTableProps) => {
                     {data.map((imgboxDto) =>
                         <TableRow key = {imgboxDto.id}>
                             <TableCell>{imgboxDto.title}</TableCell>
-                            <a href = {"#"}> {/* Link to the imgbox page for this element */}
-                                <TableCell>{imgboxDto.tags}</TableCell>
-                                </a>
+                                <TableCell>{
+                                    imgboxDto.tags.map(
+                                    (tag) => <Badge> {tag} </Badge>)}
+                                </TableCell>
+                                
                             <TableCell></TableCell>
                         </TableRow>                   
                     )}

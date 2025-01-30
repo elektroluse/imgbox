@@ -5,7 +5,7 @@ import { ApiResponse } from "../types/ApiResponse";
 import { useEffect, useState } from "react";
 import { ImgboxDto } from "../types/ImgboxDto";
 import { useAuth } from "../services/AuthProvider";
-import { AppleIcon } from "lucide-react";
+import ImgboxTable from "../components/DataTable/ImgboxTable";
 
 function UserProfile(){
 
@@ -36,6 +36,12 @@ function UserProfile(){
                             <p className="text-lg">User does not exist!</p>
                         </>
                     }
+                    {exists && typeof(data) !== "undefined" &&
+                        <>
+                            <ImgboxTable data={data}/>
+                        </> 
+                    }
+                    
         </main>
                   
     )

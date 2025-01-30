@@ -20,7 +20,7 @@ const DataTable = ({data}: DataTableProps) =>{
                     {data.map((userInfo) =>
                         <TableRow key = {userInfo.id}>
                             <TableCell>{userInfo.id}</TableCell>
-                            <a href = "#">
+                            <a href = {"#/user/" + userInfo.username}>
                                 <TableCell>{userInfo.username}</TableCell>
                                 </a>
                             <TableCell></TableCell>

@@ -36,12 +36,15 @@ function UserProfile(){
                             <p className="text-lg">User does not exist!</p>
                         </>
                     }
+                     <div className="max-w-lg mx-auto bg-slate-100 rounded-md p-5">
+                     <div className='space-y-2'>
                     {exists && typeof(data) !== "undefined" &&
-                        <>
+                        <>  
                             <ImgboxTable data={data}/>
                         </> 
                     }
-                    
+                    </div>
+                    </div>
         </main>
                   
     )

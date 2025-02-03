@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import Header from "../components/Navbar/Header";
-import getImgboxList from "../services/fetchService";
+import {getImgboxList} from "../services/fetchService";
 import { ApiResponse } from "../types/ApiResponse";
 import { useEffect, useState } from "react";
 import { ImgboxDto } from "../types/ImgboxDto";

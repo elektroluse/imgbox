@@ -1,14 +1,19 @@
+import { useState } from "react";
 import { ImgboxDto } from "../../types/ImgboxDto";
+import ImgboxComp from "../ImgboxComp";
 import { Badge } from "../ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
 
 interface ImgboxTableProps {
 
     data : ImgboxDto[]
 }
 
-const ImgboxTable = ({data} : ImgboxTableProps) => {
 
+const ImgboxTable = ({data} : ImgboxTableProps) => {
+   
     return(
         <div className = "rounded-md border">
             <Table>
@@ -28,7 +33,12 @@ const ImgboxTable = ({data} : ImgboxTableProps) => {
                                     (tag) => <Badge> {tag} </Badge>)}
                                 </TableCell>
                                 
-                            <TableCell></TableCell>
+                            <TableCell>
+                                <Link 
+                                to = {{pathname : "imgbox/" + imgboxDto.id}}
+                                state={imgboxDto}
+                                > View </Link>
+                            </TableCell>
                         </TableRow>                   
                     )}
                 </TableBody>

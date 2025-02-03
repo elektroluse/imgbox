@@ -13,6 +13,7 @@ import AuthProvider from './services/AuthProvider';
 import { Upload } from './pages/Upload';
 import { Toaster } from 'sonner';
 import UserProfile from './pages/UserProfile';
+import Imgbox from './pages/Imgbox';
 //import './App.css'
 
 const BASE_URL = 'http://localhost:8080/api/v1';
@@ -30,7 +31,8 @@ function App() {
           <Route path="/login" element = {<Login />} /> 
           <Route path="/register" element = {<Register />} />
           <Route path="/upload" element = {<Upload />} />
-          <Route path="user/:username" element = {<UserProfile />} />  
+          <Route path="user/:username" element = {<UserProfile />} /> 
+          <Route path="user/:username/imgbox/:objKey" element = {<Imgbox />} /> 
 
         </Routes>
       </AuthProvider>

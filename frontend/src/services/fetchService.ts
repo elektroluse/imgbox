@@ -49,7 +49,6 @@ async function getImgbox(imgboxDto : ImgboxDto, token : string) : Promise<BlobRe
     
 
     try {
-        console.log(objectKey);
         const response = await fetch(`${BASE_URL}${objectKey}`, {
             method : "get",
             headers : header,

@@ -1,5 +1,6 @@
 package com.oivi.imgboxb.controllers
 
+import com.oivi.imgboxb.*
 import com.oivi.imgboxb.domain.dto.*
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
@@ -7,9 +8,6 @@ import com.oivi.imgboxb.exceptions.ImageUploadException
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImgboxService
 import com.oivi.imgboxb.services.UserService
-import com.oivi.imgboxb.toImgBoxDto
-import com.oivi.imgboxb.toImgBoxDtoSafe
-import com.oivi.imgboxb.toImgBoxEntity
 import io.minio.messages.Upload
 import org.apache.commons.io.IOUtils
 import org.springframework.core.io.ByteArrayResource
@@ -66,12 +64,25 @@ class ImgBoxController(
             }
         }
     }
+    @GetMapping(path = ["id/{id}"])
+    fun getImgboxById(@PathVariable("id") id : Long) : ResponseEntity<ImgBoxDto>{
+
+        try {
+            val result = imageboxService.getImgBox(id)
+            return ResponseEntity(result.toImgBoxDtoKeyForm(),HttpStatus.OK)
+        } catch (e : Exception){
+            return when (e){
+                    is NoSuchElementException -> ResponseEntity(HttpStatus.NOT_FOUND)
+                    else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+        }
+    }
 
     @GetMapping(path = ["{username}"])
     fun getImgBoxesByUsername(@PathVariable("username") username : String) : ResponseEntity<List<ImgBoxDto>>{
         try {
             val result = imageboxService.getImgboxesByUsername(username)
-            return ResponseEntity(result.map { it.toImgBoxDtoSafe() }, HttpStatus.OK)
+            return ResponseEntity(result.map { it.toImgBoxDtoKeyForm() }, HttpStatus.OK)
 
         } catch (e : Exception){
             return when(e){

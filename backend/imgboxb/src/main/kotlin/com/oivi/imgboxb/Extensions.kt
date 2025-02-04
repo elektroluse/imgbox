@@ -63,6 +63,16 @@ fun ImgBoxEntity.toImgBoxDtoSafe() = ImgBoxDto(
 
 )
 
+fun ImgBoxEntity.toImgBoxDtoKeyForm() = ImgBoxDto(
+    id = this.id,
+    title = this.title,
+    description = this.description,
+    tags = this.tags,
+    user = this.user.toUserDtoOmitP(),
+    fileUrl = this.fileUrl.substringAfter("imgboxes/"),
+    createdAt = this.createdAt
+)
+
 
 fun ImgBoxDto.toImgBoxEntity() = ImgBoxEntity(
 

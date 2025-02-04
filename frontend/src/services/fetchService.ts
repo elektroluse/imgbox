@@ -41,9 +41,8 @@ export type BlobResponse = {
 
 async function getImgbox(imgboxDto : ImgboxDto, token : string) : Promise<BlobResponse>{
     const BASE_URL ="http://localhost:8080/api/imgbox/storage/";
-    const fileUrl = imgboxDto.fileUrl;
+    const objectKey = imgboxDto.fileUrl;
     let statusCode = -1;
-    const objectKey = fileUrl.replace("http://localhost:9000/imgboxes/","")
     const header = new Headers();
     header.append("Authorization", "Bearer " + token);
     

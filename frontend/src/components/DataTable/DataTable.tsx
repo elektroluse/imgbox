@@ -23,10 +23,8 @@ const DataTable = ({data}: DataTableProps) =>{
                         <TableRow key = {userInfo.id}>
                             <TableCell>{userInfo.id}</TableCell>
                             
-                                <TableCell 
-                                className="hover:bg-orange-300 cursor-pointer"
-                                onClick = {() => navigate("/user/" + userInfo.username) }>
-                                {userInfo.username}
+                                <TableCell>
+                                    <Link to={"/user/" + userInfo.username}>{userInfo.username}</Link>
                                 </TableCell>
                                 
                             <TableCell></TableCell>

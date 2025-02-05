@@ -37,6 +37,7 @@ const ImgboxTable = ({data} : ImgboxTableProps) => {
                                 <Link 
                                 to = {{pathname : "imgbox/" + imgboxDto.id}}
                                 state={imgboxDto}
+                                className="hover:text-blue-800 hover:underline"
                                 > View </Link>
                             </TableCell>
                         </TableRow>                   

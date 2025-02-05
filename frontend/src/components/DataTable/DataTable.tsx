@@ -23,7 +23,9 @@ const DataTable = ({data}: DataTableProps) =>{
                             <TableCell>{userInfo.id}</TableCell>
                             
                                 <TableCell>
-                                    <Link to={"/user/" + userInfo.username}>{userInfo.username}</Link>
+                                    <Link
+                                    className="hover:text-blue-800 hover:underline" 
+                                    to={"/user/" + userInfo.username}>{userInfo.username}</Link>
                                 </TableCell>
                                 
                             <TableCell></TableCell>

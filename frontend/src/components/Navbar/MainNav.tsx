@@ -10,9 +10,9 @@ export default function MainNav() {
         </Link>
         
         <nav className="flex items-center gap-3 ml-5">
-            <Link to="/users" className="hover:bg-fuchsia-600">Users</Link>
-            <Link to="/tags">Tags</Link>
-            <Link to="/upload">Upload</Link>
+            <Link to="/users" className="hover:underline">Users</Link>
+            <Link to="/tags" className="hover:underline">Tags</Link>
+            <Link to="/upload" className="hover:underline">Upload</Link>
         </nav>
     </div>
   )

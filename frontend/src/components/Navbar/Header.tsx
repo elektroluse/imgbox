@@ -20,15 +20,27 @@ export default function Header(){
                     
                     {auth.token.length === 0 &&
                         <>
-                            <Link to = "/login">Login</Link> 
-                            <Link to = "/register"> Register</Link>
+                            <Link 
+                            to = "/login"
+                            className="hover:underline">
+                            Login</Link>
+                             
+                            <Link 
+                            to = "/register"
+                            className="hover:underline"> 
+                            Register</Link>
                         </>
                     }
                     
                     {auth.token.length > 0 &&
                         <>
-                            <Link to = "/">{auth.user}</Link> 
-                            <button onClick={auth.logout}>Log out</button>
+                            <Link 
+                                to = "/"
+                                className="hover:underline">
+                                {auth.user}</Link> 
+                            <button 
+                                onClick={auth.logout}
+                                className="hover:underline">Log out</button>
                         </>
                     }
                     

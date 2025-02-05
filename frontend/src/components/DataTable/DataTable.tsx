@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router-dom";
 import { UserInfo } from "../../types/UserInfo";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 interface DataTableProps{
@@ -6,6 +7,7 @@ interface DataTableProps{
 }
 
 const DataTable = ({data}: DataTableProps) =>{
+    const navigate = useNavigate();
     return(
         <div className = "rounded-md border">
             <Table>
@@ -20,9 +22,13 @@ const DataTable = ({data}: DataTableProps) =>{
                     {data.map((userInfo) =>
                         <TableRow key = {userInfo.id}>
                             <TableCell>{userInfo.id}</TableCell>
-                            <a href = {"#/user/" + userInfo.username}>
-                                <TableCell>{userInfo.username}</TableCell>
-                                </a>
+                            
+                                <TableCell 
+                                className="hover:bg-orange-300 cursor-pointer"
+                                onClick = {() => navigate("/user/" + userInfo.username) }>
+                                {userInfo.username}
+                                </TableCell>
+                                
                             <TableCell></TableCell>
                         </TableRow>                   
                     )}

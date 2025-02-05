@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { UserInfo } from "../../types/UserInfo";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 interface DataTableProps{
@@ -7,7 +7,6 @@ interface DataTableProps{
 }
 
 const DataTable = ({data}: DataTableProps) =>{
-    const navigate = useNavigate();
     return(
         <div className = "rounded-md border">
             <Table>

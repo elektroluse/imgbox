@@ -39,7 +39,7 @@ export type BlobResponse = {
 };
 
 
-async function getImgbox(imgboxDto : ImgboxDto, token : string) : Promise<BlobResponse>{
+async function getImgboxImage(imgboxDto : ImgboxDto, token : string) : Promise<BlobResponse>{
     const BASE_URL ="http://localhost:8080/api/imgbox/storage/";
     const objectKey = imgboxDto.fileUrl;
     let statusCode = -1;
@@ -75,4 +75,42 @@ async function getImgbox(imgboxDto : ImgboxDto, token : string) : Promise<BlobRe
     
 }
 
-export {getImgboxList, getImgbox};
+export type SingleImgboxResponse = {
+    data : ImgboxDto,
+    status : number
+};
+
+async function getImgboxFromId(id : string, token : string) : Promise<SingleImgboxResponse>{
+    const BASE_URL ="http://localhost:8080/api/imgbox/id/";
+    let statusCode = -1;
+    const header = new Headers();
+    header.append("Authorization", "Bearer " + token);
+
+    try {
+        const response = await fetch(`${BASE_URL}${id}`, {
+            method : "get",
+            headers : header,
+            mode : "cors"
+        });
+
+        const imgbox =  await response.json() as ImgboxDto
+        statusCode = response.status;
+        
+        return {
+            data : imgbox,
+            status : statusCode
+        };
+
+        
+    } catch (error) {
+
+        console.log(error);
+        return {
+            data : {} as ImgboxDto,
+            status : 404
+        }
+    }
+    
+}
+
+export {getImgboxList, getImgboxImage, getImgboxFromId};

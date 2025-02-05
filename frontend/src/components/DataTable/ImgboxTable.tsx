@@ -30,7 +30,7 @@ const ImgboxTable = ({data} : ImgboxTableProps) => {
                             <TableCell>{imgboxDto.title}</TableCell>
                                 <TableCell>{
                                     imgboxDto.tags.map(
-                                    (tag) => <Badge> {tag} </Badge>)}
+                                    (tag,index) => <Badge key={index}> {tag} </Badge>)}
                                 </TableCell>
                                 
                             <TableCell>

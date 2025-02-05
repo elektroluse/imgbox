@@ -10,7 +10,7 @@ const ListTags = ({data} : ListTagsProps) => {
         <>
         {
             data.map(
-            (tag) => <Badge> {tag} </Badge>)
+            (tag,index) => <Badge key={index}> {tag} </Badge>)
         }
         </>
         )

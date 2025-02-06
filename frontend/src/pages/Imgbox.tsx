@@ -6,6 +6,7 @@ import { useAuth } from "../services/AuthProvider";
 import ImgboxComp from "../components/ImgboxComp";
 import Header from "../components/Navbar/Header";
 import { toast } from "sonner";
+import ImgboxView from "../components/ImgboxView/ImgboxView";
 
 function Imgbox(){
     const location = useLocation();
@@ -58,22 +59,16 @@ function Imgbox(){
             <Header/>
             {
                 location.state !== null &&
-                <>
-                    <ImgboxComp imgboxDto={location.state}/>
-                    <div className="flex justify-center sm:px-12 p-8 h-screen  ">
-                        <img className="object-scale-down max-h-64 drop-shadow-md rounded-md m-auto" src={image}></img>
-                    </div>
-                </>
+                
+                <ImgboxView imgboxDto={location.state} image={image}/>         
+                
             }
             {
                 fetchedImgbox !== null && typeof(fetchedImgbox) !== "undefined" &&
                 !error &&
-                <>
-                    <ImgboxComp imgboxDto={fetchedImgbox}/>
-                    <div className="flex sm:px-12 p-8 h-screen">
-                        <img className="object-scale-down max-h-64 drop-shadow-md rounded-md m-auto" src={image}></img>
-                    </div>
-                </>
+                  
+                <ImgboxView imgboxDto={fetchedImgbox} image={image} />
+            
             }
             {
                 error &&

@@ -1,9 +1,6 @@
-import { useState } from "react";
 import { ImgboxDto } from "../../types/ImgboxDto";
-import ImgboxComp from "../ImgboxComp";
 import { Badge } from "../ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
-import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
 interface ImgboxTableProps {

@@ -54,13 +54,15 @@ function Imgbox(){
 
 
     return(
-        <main>
+        <main className="bg-gray-400 min-h-screen w-screen space-y-5 ">
             <Header/>
             {
                 location.state !== null &&
                 <>
                     <ImgboxComp imgboxDto={location.state}/>
-                    <img src={image}></img>
+                    <div className="flex justify-center sm:px-12 p-8 h-screen  ">
+                        <img className="object-scale-down max-h-64 drop-shadow-md rounded-md m-auto" src={image}></img>
+                    </div>
                 </>
             }
             {
@@ -68,7 +70,9 @@ function Imgbox(){
                 !error &&
                 <>
                     <ImgboxComp imgboxDto={fetchedImgbox}/>
-                    <img src={image}></img>
+                    <div className="flex sm:px-12 p-8 h-screen">
+                        <img className="object-scale-down max-h-64 drop-shadow-md rounded-md m-auto" src={image}></img>
+                    </div>
                 </>
             }
             {

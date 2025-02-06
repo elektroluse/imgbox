@@ -32,7 +32,7 @@ function App() {
           <Route path="/register" element = {<Register />} />
           <Route path="/upload" element = {<Upload />} />
           <Route path="user/:username" element = {<UserProfile />} /> 
-          <Route path="user/:username/imgbox/:imgbox" element = {<Imgbox />} /> 
+          <Route path="/imgbox/:imgbox" element = {<Imgbox />} /> 
 
         </Routes>
       </AuthProvider>

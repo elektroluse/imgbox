@@ -12,4 +12,5 @@ interface ImgboxService {
     fun getImgboxesByUsername(username: String): List<ImgBoxEntity>
     fun packFileWithBox(imgboxes: List<ImgBoxEntity>): List<ImgboxWithFileDto>
     fun downloadFile(objKey: String): InputStream
+    fun getImgboxByTitleSearch(searchCriteria: String): List<ImgBoxEntity>
 }

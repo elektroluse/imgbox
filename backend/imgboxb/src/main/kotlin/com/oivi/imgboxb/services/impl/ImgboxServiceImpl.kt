@@ -65,4 +65,7 @@ class ImgboxServiceImpl(
                 IOUtils.toByteArray(imageStorageService.getInputStream(it.fileUrl)))
         }
     }
+    override fun getImgboxByTitleSearch(searchCriteria : String) : List<ImgBoxEntity>{
+        return imgBoxRepository.findByTitleIgnoreCaseContaining(searchCriteria)
+    }
 }

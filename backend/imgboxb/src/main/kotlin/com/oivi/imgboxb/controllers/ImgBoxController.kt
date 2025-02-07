@@ -10,6 +10,7 @@ import com.oivi.imgboxb.services.ImgboxService
 import com.oivi.imgboxb.services.UserService
 import io.minio.messages.Upload
 import org.apache.commons.io.IOUtils
+import org.simpleframework.xml.Path
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.InputStreamResource
 import org.springframework.http.HttpHeaders
@@ -142,5 +143,13 @@ class ImgBoxController(
             .headers(headers)
             .body(InputStreamResource(inputStream))
 
+    }
+    @GetMapping(path = ["search/title/{searchTerm}"])
+    fun searchForImgboxesByTitle(
+        @PathVariable("searchTerm") searchTerm : String) : ResponseEntity<List<ImgBoxDto>>{
+        val result = imageboxService.getImgboxByTitleSearch(searchTerm);
+        return ResponseEntity(
+            result.map { it.toImgBoxDtoKeyForm() },
+            HttpStatus.OK)
     }
 }

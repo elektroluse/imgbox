@@ -19,7 +19,9 @@
     - downloadImage `GET : /api/imgbox/storage/{objectkey}`
     - downloadImageAlt `GET : /api/imgbox/alternate/{objectkey}`
       - different implementation of above
-
+    - searchByTitle  `GET : /api/imgbox/search/title/{searchTerm}`
+      - Returns list of imgboxes where the title contains the search term 
+   
 ## Services
  - `ImageStorageService`
     - Upload and get files from MinIO client

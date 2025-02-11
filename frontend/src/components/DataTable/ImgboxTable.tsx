@@ -1,4 +1,5 @@
 import { ImgboxDto } from "../../types/ImgboxDto";
+import ListTags from "../ListTags";
 import { Badge } from "../ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Link } from "react-router-dom";
@@ -25,14 +26,10 @@ const ImgboxTable = ({data} : ImgboxTableProps) => {
                     {data.map((imgboxDto) =>
                         <TableRow key = {imgboxDto.id}>
                             <TableCell>{imgboxDto.title}</TableCell>
-                            <div className="flex gap-3">
-                                <TableCell>{
-                                    
-                                    imgboxDto.tags.map(
-                                    (tag,index) => <Badge key={index}> {tag} </Badge>)}
-                                    
+                                <TableCell>
+                                    <ListTags data={imgboxDto.tags}/>
                                 </TableCell>
-                                </div>
+                                
                             <TableCell>
                                 <Link 
                                 to = {"/imgbox/" + imgboxDto.id}

@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { toast } from "sonner";
 import { UserInfo } from "../types/UserInfo";
 import { useAuth } from "../services/AuthProvider";
-import { toast } from "sonner";
 
-export default function LoggedInUser(){
+type LoginStatusProps = {
+    setStatus : (val : boolean)=> void
+}
 
-    const BASE_URL = 'http://localhost:8080/api/v1'
-    const [user, setUser] = useState<UserInfo>();
-    const[loggedIn, setLoggedIn] = useState(false);
-    const[username, setUsername] = useState("");
+const CheckLoginStatus = ({setStatus} : LoginStatusProps) => {
+
+    const BASE_URL = 'http://localhost:8080/api/v1';
     const auth = useAuth();
     useEffect(() => {
         const fetchUser = async () => {
@@ -25,39 +26,39 @@ export default function LoggedInUser(){
             });
             statusCode = response.status;
             const userInfo = await (response.json()) as UserInfo 
-            setUser(userInfo);
-            setUsername(userInfo.username);
+            //setUser(userInfo);
             if(statusCode != 200){
-              setUsername("You are not logged in or token has expired");
-              setLoggedIn(false);
+              setStatus(false);
               toast.error("You are not logged in or token has expired!");
               
             }
             if(statusCode == 200){
-              setLoggedIn(true);
+              setStatus(true);
               toast.success("You are logged in!");
             }
           
           } catch (e : any) {
             //setError(e)
             if(statusCode === 401){
-              setUsername("You are not logged in or token has expired");
-              setLoggedIn(false);
+              setStatus(false);
               toast.error("You are not logged in or token has expired!");
             }else{
-              setUsername("Backend is not up");
+              toast.error("Backend is not up");
             }
             
           } 
           
         };
     
-        fetchUser()
+        fetchUser();
       }, [])
 
       return(
-        <></>
+        <>
+    
+        </>
       )
-
-
 }
+
+
+export default CheckLoginStatus;

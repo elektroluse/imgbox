@@ -25,11 +25,14 @@ const ImgboxTable = ({data} : ImgboxTableProps) => {
                     {data.map((imgboxDto) =>
                         <TableRow key = {imgboxDto.id}>
                             <TableCell>{imgboxDto.title}</TableCell>
+                            <div className="flex gap-3">
                                 <TableCell>{
+                                    
                                     imgboxDto.tags.map(
                                     (tag,index) => <Badge key={index}> {tag} </Badge>)}
+                                    
                                 </TableCell>
-                                
+                                </div>
                             <TableCell>
                                 <Link 
                                 to = {"/imgbox/" + imgboxDto.id}

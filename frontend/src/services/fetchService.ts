@@ -113,4 +113,31 @@ async function getImgboxFromId(id : string, token : string) : Promise<SingleImgb
     
 }
 
-export {getImgboxList, getImgboxImage, getImgboxFromId};
+async function fetchSearchTermList(searchTerm : string, token : string) : Promise<ImgboxDto[]>{
+    
+        const BASE_URL ="http://localhost:8080/api/imgbox/search/title/";
+        let statusCode = -1;
+        const header = new Headers();
+        header.append("Authorization", "Bearer " + token);
+        try {
+
+            const response = await fetch(`${BASE_URL}${searchTerm}`,
+                {
+                    method : "get",
+                    headers: header
+                });
+            statusCode = response.status;
+            const listOfImgboxes = await(response.json()) as ImgboxDto[];
+            
+            return listOfImgboxes;
+            
+        } catch (error) {
+            console.log(error);
+
+           return [];
+           
+        }
+
+}
+
+export {getImgboxList, getImgboxImage, getImgboxFromId, fetchSearchTermList};

@@ -1,6 +1,16 @@
 # Imgbox
  Imgbox web application, frontend tbd,  kotlin springboot backend
 
+## How to run
+- `git clone https://github.com/elektroluse/imgbox.git`
+- Backend
+  - `cd imgbox/backend/imgboxb`
+  - `docker compose up -d`
+  - `./mvnw spring-boot:run`
+- Frontend
+  - `cd imgbox/frontend`
+  - `npm install`
+  - `npm run dev`
 
  ## Endpoints
  - Auth Controller `/api/auth/**`

@@ -31,6 +31,10 @@
       - different implementation of above
     - searchByTitle  `GET : /api/imgbox/search/title/{searchTerm}`
       - Returns list of imgboxes where the title contains the search term 
+ 
+ - Tag Controller `/api/tags/**`
+    - List all endpoint `GET : /api/tags/list/all`
+    - List imgboxes with tag endpoint `GET : /api/tags/list/imgboxes/{tag}`
    
 ## Services
  - `ImageStorageService`
@@ -41,6 +45,9 @@
 
 - `ImgboxService`
     - Stores and retrieves ImgBoxes from the database
+
+- `TagService`
+  - Tag related services 
 
 - `JwtTokenService`
     - Generates, parses and validates jwt tokens

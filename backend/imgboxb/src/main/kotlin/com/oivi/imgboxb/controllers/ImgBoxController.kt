@@ -7,6 +7,7 @@ import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.exceptions.ImageUploadException
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImgboxService
+import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.services.UserService
 import io.minio.messages.Upload
 import org.apache.commons.io.IOUtils
@@ -36,7 +37,8 @@ import java.time.temporal.ChronoUnit
 @RequestMapping(path = ["/api/imgbox"])
 class ImgBoxController(
     val imageboxService : ImgboxService,
-    val userService: UserService
+    val userService: UserService,
+    val tagService: TagService
 ) {
 
     @PostMapping(path = ["upload"])

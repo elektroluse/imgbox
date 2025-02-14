@@ -9,6 +9,7 @@ import com.oivi.imgboxb.repositories.ImgBoxRepository
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImageStorageService
 import com.oivi.imgboxb.services.ImgboxService
+import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.toImgBoxDtoSafe
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
@@ -24,7 +25,8 @@ import java.io.InputStream
 class ImgboxServiceImpl(
     private val imageStorageService : ImageStorageService,
     private val imgBoxRepository: ImgBoxRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val tagService : TagService
 )  : ImgboxService {
 
     @Transactional
@@ -34,6 +36,9 @@ class ImgboxServiceImpl(
         }
         val fileUrl : String = imageStorageService.uploadImage(imgBoxEntity.user.username,false,mf)
         imgBoxEntity.fileUrl = fileUrl
+        imgBoxEntity.tags = imgBoxEntity.tags.map{
+            tag -> tagService.getIfExistsOrCreate(tag.name)
+        }.toMutableSet()
         return imgBoxRepository.save(imgBoxEntity)
     }
 

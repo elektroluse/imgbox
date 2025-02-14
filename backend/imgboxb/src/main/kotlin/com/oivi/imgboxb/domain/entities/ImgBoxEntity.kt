@@ -18,8 +18,12 @@ data class ImgBoxEntity(
     @Column(name = "description")
     val description : String,
 
-    @Column(name = "tags")
-    var tags : MutableSet<String>,
+    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @JoinTable(
+        name = "imgbox_tags", joinColumns = [JoinColumn(name = "imgbox_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "tag_id", referencedColumnName = "id")]
+    )
+    var tags : MutableSet<TagEntity>,
 
     @Column(name = "file_url")
     var fileUrl : String,
@@ -31,3 +35,14 @@ data class ImgBoxEntity(
     @Column(name = "created_at")
     val createdAt : Timestamp
     )
+{
+
+    fun addTag(tagEntity : TagEntity){
+        tags.add(tagEntity);
+        tagEntity.addImgbox(this)
+    }
+    fun removeTag(tagEntity: TagEntity){
+        tags.remove(tagEntity)
+        tagEntity.removeImgbox(this)
+    }
+}

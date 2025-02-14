@@ -6,7 +6,6 @@ import com.oivi.imgboxb.repositories.TagRepository
 import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.services.UserService
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class TagServiceImpl(
@@ -26,5 +25,11 @@ class TagServiceImpl(
     override fun list() : List<TagEntity>{
 
         return tagRepository.findAll()
+    }
+
+    override fun listImgboxesWithTag(tag: String): List<ImgBoxEntity> {
+        val tagEntity = tagRepository.findByName(tag)
+            ?: return emptyList()
+        return tagEntity.imgboxes.toList()
     }
 }

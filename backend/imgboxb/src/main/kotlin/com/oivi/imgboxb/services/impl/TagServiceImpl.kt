@@ -23,4 +23,8 @@ class TagServiceImpl(
     override fun create(tagEntity : TagEntity) : TagEntity{
         return tagRepository.save(tagEntity)
     }
+    override fun list() : List<TagEntity>{
+
+        return tagRepository.findAll()
+    }
 }

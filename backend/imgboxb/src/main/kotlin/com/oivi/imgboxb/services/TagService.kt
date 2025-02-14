@@ -6,4 +6,5 @@ interface TagService {
 
     fun create(tagEntity: TagEntity): TagEntity
     fun getIfExistsOrCreate(name: String): TagEntity
+    fun list(): List<TagEntity>
 }

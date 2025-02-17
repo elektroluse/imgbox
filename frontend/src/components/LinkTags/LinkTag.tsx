@@ -10,7 +10,7 @@ const LinkTag = ({name} : LinkTagProps) => {
 
     return(
         <Link to={"/tag/" + name}>
-            <Badge>{name}</Badge>
+            <Badge className="m-0.5">{name}</Badge>
         </Link>
     )
 

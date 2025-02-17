@@ -1,3 +1,4 @@
+import LinkTag from "./LinkTags/LinkTag";
 import { Badge } from "./ui/badge";
 
 interface ListTagsProps  {
@@ -10,7 +11,7 @@ const ListTags = ({data} : ListTagsProps) => {
         <>
         {
             data.map(
-            (tag,index) => <Badge className="m-0.5" key={index}> {tag} </Badge>)
+            (tag,index) => <LinkTag name={tag} key={index} /> )
         }
         </>
         )

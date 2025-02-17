@@ -21,8 +21,10 @@ export function Tags(){
     return(
         <main className="bg-gray-400 h-screen w-screen space-y-5">
             <Header />
+            <h1 className="font-bold text-5xl text-center m-3 text-orange-200"> All tags sorted by frequency </h1>
             <div className="max-w-lg mx-auto bg-slate-100 rounded-md p-5">
             <div className='space-y-2'>
+            
             {data !== null &&
                 <TagCountTable data = {data} />
             }

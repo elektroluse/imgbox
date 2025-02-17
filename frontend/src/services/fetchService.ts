@@ -1,5 +1,6 @@
 import { ApiResponse } from "../types/ApiResponse";
 import { ImgboxDto } from "../types/ImgboxDto";
+import { TagCount } from "../types/TagCount";
 
 async function getImgboxList(username : string, token : string) : Promise<ApiResponse>{
     const BASE_URL = "http://localhost:8080/api/imgbox/";
@@ -140,4 +141,31 @@ async function fetchSearchTermList(searchTerm : string, token : string) : Promis
 
 }
 
-export {getImgboxList, getImgboxImage, getImgboxFromId, fetchSearchTermList};
+async function getTagCountList(token : string) : Promise<TagCount[]>{
+
+    const BASE_URL ="http://localhost:8080/api/tags/list/all/count";
+    const header = new Headers();
+    let statusCode = -1;
+    header.append("Authorization", "Bearer " + token);
+
+    try {
+
+        const response = await fetch(`${BASE_URL}`,
+            {
+                method : "get",
+                headers: header
+            });
+        statusCode = response.status;
+        const listOfTagCounts = await(response.json()) as TagCount[];
+        
+        return listOfTagCounts;
+        
+    } catch (error) {
+        console.log(error);
+
+       return [];
+       
+    }
+}
+
+export {getImgboxList, getImgboxImage, getImgboxFromId, fetchSearchTermList, getTagCountList};

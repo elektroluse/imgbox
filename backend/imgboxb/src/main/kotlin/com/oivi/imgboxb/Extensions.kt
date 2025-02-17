@@ -109,6 +109,10 @@ fun String.toTagEntity() : TagEntity = TagEntity(
 fun TagEntity.toStringOnly() : String {
     return this.name;
 }
+fun TagEntity.toTagCountDto() = TagCountDto(
+    name = this.name,
+    count = this.imgboxes.size
+)
 
 fun MutableSet<String>.toMutableSetTagEntity() : MutableSet<TagEntity>{
     return (this.map{ it.toTagEntity()}).toMutableSet()

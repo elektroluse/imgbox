@@ -1,5 +1,5 @@
 # Imgbox
- Imgbox web application, frontend tbd,  kotlin springboot backend
+ Imgbox web application, React frontend, kotlin springboot backend
 
 ## How to run
 - `git clone https://github.com/elektroluse/imgbox.git`
@@ -34,6 +34,7 @@
  
  - Tag Controller `/api/tags/**`
     - List all endpoint `GET : /api/tags/list/all`
+    - List all with count endpoint `GET : /api/tags/list/count`
     - List imgboxes with tag endpoint `GET : /api/tags/list/imgboxes/{tag}`
    
 ## Services

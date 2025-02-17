@@ -1,7 +1,5 @@
-import { Link } from "react-router-dom";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { TagCount } from "../../types/TagCount";
-import { Badge } from "../ui/badge";
 import LinkTag from "../LinkTags/LinkTag";
 interface TagCountTableProps{
 

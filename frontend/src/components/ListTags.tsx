@@ -1,5 +1,4 @@
 import LinkTag from "./LinkTags/LinkTag";
-import { Badge } from "./ui/badge";
 
 interface ListTagsProps  {
 

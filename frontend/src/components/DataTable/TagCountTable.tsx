@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { TagCount } from "../../types/TagCount";
 import { Badge } from "../ui/badge";
+import LinkTag from "../LinkTags/LinkTag";
 interface TagCountTableProps{
 
     data: TagCount[];
@@ -24,9 +25,7 @@ const TagCountTable = ({data}: TagCountTableProps) =>{
                            
                             
                                 <TableCell>
-                                    <Link
-                                    className="hover:text-blue-800 hover:underline" 
-                                    to={"/tag/" + tagCount.name}><Badge>{tagCount.name}</Badge></Link>
+                                    <LinkTag name = {tagCount.name}/>
                                 </TableCell>
                                 <TableCell>{tagCount.count}</TableCell>
                                 

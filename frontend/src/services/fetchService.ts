@@ -168,4 +168,34 @@ async function getTagCountList(token : string) : Promise<TagCount[]>{
     }
 }
 
-export {getImgboxList, getImgboxImage, getImgboxFromId, fetchSearchTermList, getTagCountList};
+async function getImgboxesByTag(tag : string, token : string)
+ : Promise<ImgboxDto[]>{
+
+    const BASE_URL ="http://localhost:8080/api/tags/list/imgboxes/";
+    const header = new Headers();
+    let statusCode = -1;
+    header.append("Authorization", "Bearer " + token);
+    try {
+
+        const response = await fetch(`${BASE_URL}${tag}`,
+            {
+                method : "get",
+                headers: header
+            });
+        statusCode = response.status;
+        const listOfImgboxes = await(response.json()) as ImgboxDto[];
+        
+        return listOfImgboxes;
+        
+    } catch (error) {
+        console.log(error);
+
+       return [];
+       
+    }
+
+}
+
+export {getImgboxList, getImgboxImage,
+     getImgboxFromId, fetchSearchTermList,
+      getTagCountList,getImgboxesByTag};

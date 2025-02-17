@@ -5,6 +5,7 @@ import com.oivi.imgboxb.domain.entities.TagEntity
 import com.oivi.imgboxb.repositories.TagRepository
 import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.services.UserService
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
 @Service
@@ -23,9 +24,9 @@ class TagServiceImpl(
         return tagRepository.save(tagEntity)
     }
     override fun list() : List<TagEntity>{
-
-        return tagRepository.findAll()
+        return tagRepository.findAll(Sort.by(Sort.Direction.DESC,"imgboxes"))
     }
+
 
     override fun listImgboxesWithTag(tag: String): List<ImgBoxEntity> {
         val tagEntity = tagRepository.findByName(tag)

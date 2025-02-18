@@ -94,8 +94,12 @@ export async function sendUploadDto(values : ImgboxUploadFormType, token : strin
       serverResponse.success = true;
       return serverResponse;
     }
+    if(statusCode === 401){
+      return {message : "You need to be logged in to upload!", success : false}
+    }
     
   } catch (e : any) {
+    
     console.log(e);
   }
   

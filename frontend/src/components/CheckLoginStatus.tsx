@@ -30,6 +30,10 @@ const CheckLoginStatus = ({setStatus} : LoginStatusProps) => {
             if(statusCode != 200){
               setStatus(false);
               toast.error("You are not logged in or token has expired!");
+              if(auth.token.length > 0){
+                auth.logout();
+              }
+              
               
             }
             if(statusCode == 200){
@@ -42,6 +46,10 @@ const CheckLoginStatus = ({setStatus} : LoginStatusProps) => {
             if(statusCode === 401){
               setStatus(false);
               toast.error("You are not logged in or token has expired!");
+              if(auth.token.length > 0){
+                auth.logout();
+              }
+              
             }else{
               toast.error("Backend is not up");
             }

@@ -60,6 +60,7 @@ export default function SearchForm({loggedIn,setSearchData} : SearchFormProps) {
               disabled = {!loggedIn}
               placeholder="Search by title"
               type="search"
+              title={!loggedIn ? "Log in to search" : ""}
               {...field} />
             </FormControl>
           </FormItem>

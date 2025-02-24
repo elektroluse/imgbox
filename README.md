@@ -21,7 +21,7 @@
     - Upload endpoint `POST : /api/imgbox/upload`
     - getById `GET : /api/imgbox/id/{id}`
     - Update `PUT : /api/imgbox/id/{id}`
-      - Update everything except id, created_at and file_url (if logged in user is the owner)
+      - Update everything except id, created_at and file_url (if requesting user is the owner)
       - Works but not happy with implementation will change later
       - Maybe add edited timestamp to db
     - getByUsername `GET : /api/imgbox/{username}`

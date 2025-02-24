@@ -10,6 +10,7 @@ import com.oivi.imgboxb.services.ImgboxService
 import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.services.UserService
 import io.minio.messages.Upload
+import okhttp3.Response
 import org.apache.commons.io.IOUtils
 import org.simpleframework.xml.Path
 import org.springframework.core.io.ByteArrayResource
@@ -20,13 +21,7 @@ import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestPart
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.InputStream
 import java.sql.Timestamp
@@ -79,6 +74,27 @@ class ImgBoxController(
                     else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
+    }
+
+    @PutMapping(path = ["id/{id}"])
+    fun updateImgbox(
+        authentication: Authentication,
+        @PathVariable("id") id : Long,
+        @RequestBody imgboxDto: ImgBoxDto) : ResponseEntity<ImgBoxDto>{
+        try {
+
+            val result = imageboxService.update(id, imgboxDto, authentication.name)
+            return ResponseEntity(result.toImgBoxDtoKeyForm(), HttpStatus.OK)
+
+        }catch (e : Exception){
+            return when (e){
+                is NoSuchElementException -> ResponseEntity(HttpStatus.NOT_FOUND)
+                is IllegalStateException -> ResponseEntity(HttpStatus.UNAUTHORIZED)
+                else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+        }
+
+
     }
 
     @GetMapping(path = ["{username}"])

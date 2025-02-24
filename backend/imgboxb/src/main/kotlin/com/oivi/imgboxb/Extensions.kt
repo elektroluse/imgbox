@@ -117,3 +117,15 @@ fun TagEntity.toTagCountDto() = TagCountDto(
 fun MutableSet<String>.toMutableSetTagEntity() : MutableSet<TagEntity>{
     return (this.map{ it.toTagEntity()}).toMutableSet()
 }
+fun ImgBoxEntity.update(updatedData : ImgBoxDto) = ImgBoxEntity(
+    id = this.id,
+    title = updatedData.title,
+    description = updatedData.description,
+    tags = updatedData.tags.toMutableSetTagEntity(),
+    fileUrl = this.fileUrl,
+    user = this.user,
+    createdAt = this.createdAt
+)
+
+
+

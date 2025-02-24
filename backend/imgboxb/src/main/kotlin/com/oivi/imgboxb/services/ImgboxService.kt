@@ -1,5 +1,6 @@
 package com.oivi.imgboxb.services
 
+import com.oivi.imgboxb.domain.dto.ImgBoxDto
 import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import org.springframework.web.multipart.MultipartFile
@@ -13,4 +14,5 @@ interface ImgboxService {
     fun packFileWithBox(imgboxes: List<ImgBoxEntity>): List<ImgboxWithFileDto>
     fun downloadFile(objKey: String): InputStream
     fun getImgboxByTitleSearch(searchCriteria: String): List<ImgBoxEntity>
+    fun update(id: Long, alteredData: ImgBoxDto, usernameOfUpdater: String): ImgBoxEntity
 }

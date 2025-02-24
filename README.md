@@ -20,6 +20,10 @@
 - Imgbox Controller `/api/imgbox/**`
     - Upload endpoint `POST : /api/imgbox/upload`
     - getById `GET : /api/imgbox/id/{id}`
+    - Update `PUT : /api/imgbox/id/{id}`
+      - Update everything except id, created_at and file_url (if logged in user is the owner)
+      - Works but not happy with implementation will change later
+      - Maybe add edited timestamp to db
     - getByUsername `GET : /api/imgbox/{username}`
       - todo : refactor with user/username literal before to avoid conflicts
         

@@ -1,5 +1,6 @@
 package com.oivi.imgboxb.services.impl
 
+import com.oivi.imgboxb.domain.dto.ImgBoxDto
 import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
 import com.oivi.imgboxb.domain.dto.UserDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
@@ -11,6 +12,7 @@ import com.oivi.imgboxb.services.ImageStorageService
 import com.oivi.imgboxb.services.ImgboxService
 import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.toImgBoxDtoSafe
+import com.oivi.imgboxb.update
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Sort
@@ -26,7 +28,7 @@ class ImgboxServiceImpl(
     private val imageStorageService : ImageStorageService,
     private val imgBoxRepository: ImgBoxRepository,
     private val userRepository: UserRepository,
-    private val tagService : TagService
+    private val tagService : TagService,
 )  : ImgboxService {
 
     @Transactional
@@ -40,6 +42,17 @@ class ImgboxServiceImpl(
             tag -> tagService.getIfExistsOrCreate(tag.name)
         }.toMutableSet()
         return imgBoxRepository.save(imgBoxEntity)
+    }
+
+    @Transactional
+    override fun update(id : Long, alteredData : ImgBoxDto, usernameOfUpdater : String) : ImgBoxEntity{
+        val existingImgbox = getImgBox(id)
+        check(existingImgbox.user.username == usernameOfUpdater)
+        val updatedEntity = existingImgbox.update(alteredData)
+        updatedEntity.tags = updatedEntity.tags.map{
+            tag -> tagService.getIfExistsOrCreate(tag.name)
+        }.toMutableSet()
+        return imgBoxRepository.save(updatedEntity)
     }
 
     override fun getImgBox(id : Long) : ImgBoxEntity{

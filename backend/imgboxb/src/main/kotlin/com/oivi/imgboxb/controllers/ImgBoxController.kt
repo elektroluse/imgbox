@@ -80,10 +80,10 @@ class ImgBoxController(
     fun updateImgbox(
         authentication: Authentication,
         @PathVariable("id") id : Long,
-        @RequestBody imgboxDto: ImgBoxDto) : ResponseEntity<ImgBoxDto>{
+        @RequestBody data: ImgboxEditDto) : ResponseEntity<ImgBoxDto>{
         try {
 
-            val result = imageboxService.update(id, imgboxDto, authentication.name)
+            val result = imageboxService.update(id, data, authentication.name)
             return ResponseEntity(result.toImgBoxDtoKeyForm(), HttpStatus.OK)
 
         }catch (e : Exception){

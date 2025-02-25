@@ -117,7 +117,7 @@ fun TagEntity.toTagCountDto() = TagCountDto(
 fun MutableSet<String>.toMutableSetTagEntity() : MutableSet<TagEntity>{
     return (this.map{ it.toTagEntity()}).toMutableSet()
 }
-fun ImgBoxEntity.update(updatedData : ImgBoxDto) = ImgBoxEntity(
+fun ImgBoxEntity.update(updatedData : ImgboxEditDto) = ImgBoxEntity(
     id = this.id,
     title = updatedData.title,
     description = updatedData.description,

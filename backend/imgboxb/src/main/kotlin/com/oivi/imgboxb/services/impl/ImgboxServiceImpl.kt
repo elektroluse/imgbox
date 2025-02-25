@@ -1,6 +1,7 @@
 package com.oivi.imgboxb.services.impl
 
 import com.oivi.imgboxb.domain.dto.ImgBoxDto
+import com.oivi.imgboxb.domain.dto.ImgboxEditDto
 import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
 import com.oivi.imgboxb.domain.dto.UserDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
@@ -45,7 +46,7 @@ class ImgboxServiceImpl(
     }
 
     @Transactional
-    override fun update(id : Long, alteredData : ImgBoxDto, usernameOfUpdater : String) : ImgBoxEntity{
+    override fun update(id : Long, alteredData : ImgboxEditDto, usernameOfUpdater : String) : ImgBoxEntity{
         val existingImgbox = getImgBox(id)
         check(existingImgbox.user.username == usernameOfUpdater)
         val updatedEntity = existingImgbox.update(alteredData)

@@ -62,14 +62,14 @@ const ACCEPTED_IMAGE_TYPES = [
 const formSchema = z.object({
   title: z.string().min(1).max(255),
   description: z.string().max(2048).optional(),
-  tags: z.array(z.string()).nonempty("Please at least one item"),
+  tags: z.array(z.string()).nonempty("Please at least one item").max(4),
   files: z.array(
     z.instanceof(File).refine((file) => file.size < 4 * 1024 * 1024, {
       message: "File size must be less than 4MB",
     }),
   )
-  .max(5, {
-    message: "Maximum 5 files are allowed",
+  .max(1, {
+    message: "Maximum 1 files are allowed",
   })
   .nullable(),
 });

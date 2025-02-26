@@ -69,7 +69,7 @@ const formSchema = z.object({
     }),
   )
   .max(1, {
-    message: "Maximum 1 files are allowed",
+    message: "Max 1 file is allowed",
   })
   .nullable(),
 });

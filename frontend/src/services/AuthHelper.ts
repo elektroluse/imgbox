@@ -115,13 +115,12 @@ export async function sendEditRequest(values : ImgboxEditForm, token : string) :
   header.append("Content-Type","application/json");
   console.log(header.get("Authorization"));
   let statusCode : number = -1;
-
   try{
     const response = await fetch(`${API_URL}${values.id}`, 
       {
         method : 'put',
         headers : header,
-        body : JSON.stringify(values)
+        body : JSON.stringify({...values, id : Number(values.id)})
       });
     statusCode = response.status;
 

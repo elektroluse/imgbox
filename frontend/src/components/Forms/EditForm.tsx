@@ -21,7 +21,7 @@ import { sendEditRequest } from "../../services/AuthHelper";
   
 
 const formSchema = z.object({
-  id: z.coerce.number(),
+  id: z.coerce.bigint(),
   title: z.string().min(1).max(255),
   description: z.string().max(2048).optional(),
   tags: z.array(z.string()).nonempty("Please at least one item").max(4),
@@ -44,7 +44,6 @@ export default function EditForm({currentData} : EditDalogProps){
         }
         
         try {
-          console.log("hello");
           initEditRequest();
           
           

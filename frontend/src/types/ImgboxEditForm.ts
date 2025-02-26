@@ -1,6 +1,6 @@
 export type ImgboxEditForm = {
 
-    id : bigint,
+    id : number,
     title : string,
     description? : string,
     tags : string[]

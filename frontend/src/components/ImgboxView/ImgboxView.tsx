@@ -1,4 +1,6 @@
+import { useAuth } from "../../services/AuthProvider";
 import { ImgboxDto } from "../../types/ImgboxDto";
+import { EditDialog } from "../DialogComp/EditDialog";
 
 import ListTags from "../ListTags";
 import { Link } from "react-router-dom";
@@ -9,7 +11,7 @@ type ImgboxViewProps = {
 }
 
  const ImgboxView = ({imgboxDto,image} : ImgboxViewProps) => {
-    
+    const auth = useAuth();
     return(
         
         <>
@@ -18,6 +20,7 @@ type ImgboxViewProps = {
                     <Link
                      to={"/user/" + imgboxDto.user.username} 
                      className="font-bold text-xl hover:underline ml-1">{imgboxDto.user.username}</Link>
+                     
                 </header> 
                 <h1 className="font-semibold text-5xl text-center m-1">{imgboxDto.title} </h1>
                 
@@ -29,6 +32,10 @@ type ImgboxViewProps = {
                 </div>
                 <p className="w-full">{imgboxDto.description}</p>
                 </div>
+                {
+                    auth.user == imgboxDto.user.username &&
+                    <EditDialog currentData={imgboxDto}/>
+                }
                 
                 
   

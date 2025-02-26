@@ -1,4 +1,5 @@
 import { AuthDto } from "../types/AuthDto";
+import { ImgboxEditForm } from "../types/ImgboxEditForm";
 import { ImgboxUploadDto } from "../types/ImgboxUploadDto";
 import { ImgboxUploadFormType } from "../types/ImgboxUploadFormType";
 import { LoginResponseDto } from "../types/LoginResponseDto";
@@ -105,6 +106,34 @@ export async function sendUploadDto(values : ImgboxUploadFormType, token : strin
   
   return {message : "Upload was not successful", success : false};
   
+}
+
+export async function sendEditRequest(values : ImgboxEditForm, token : string) : Promise<number>{
+  const API_URL = "http://localhost:8080/api/imgbox/id/"
+  const header = new Headers();
+  header.append("Authorization", "Bearer " + token);
+  header.append("Content-Type","application/json");
+  console.log(header.get("Authorization"));
+  let statusCode : number = -1;
+
+  try{
+    const response = await fetch(`${API_URL}${values.id}`, 
+      {
+        method : 'put',
+        headers : header,
+        body : JSON.stringify(values)
+      });
+    statusCode = response.status;
+
+    
+    
+  } catch (e : any) {
+    
+    console.log(e);
+  }
+  
+  return statusCode;
+
 }
 
 

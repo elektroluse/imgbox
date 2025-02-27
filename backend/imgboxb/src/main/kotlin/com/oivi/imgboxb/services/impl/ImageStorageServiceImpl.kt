@@ -1,6 +1,6 @@
 package com.oivi.imgboxb.services.impl
 
-import com.oivi.imgboxb.configs.MinioConfig
+import com.oivi.imgboxb.exceptions.ImageDeleteException
 import com.oivi.imgboxb.exceptions.ImageUploadException
 import com.oivi.imgboxb.services.ImageStorageService
 import io.minio.*
@@ -42,6 +42,18 @@ class ImageStorageServiceImpl @Autowired constructor(
         catch (e : Exception){
             throw ImageUploadException("Image was not uploaded to storage service")
         }
+    }
+
+    override fun deleteImage(fileUrl: String){
+        val objectName = getObjKeyFromUrl(fileUrl)
+        try {
+            minioClient.removeObject(
+                RemoveObjectArgs.builder().bucket(bucketName).`object`(objectName).build()
+            )
+        }catch (e : Exception){
+            throw ImageDeleteException("Image could not be deleted from storage service")
+        }
+
     }
 
     override fun getInputStream(fileUrl : String) : InputStream{

@@ -8,4 +8,5 @@ interface ImageStorageService {
     fun generateUniqueName(f : MultipartFile) : String
     fun getInputStream(fileUrl: String): InputStream
     fun getInputStreamFromKey(objKey: String): InputStream
+    fun deleteImage(fileUrl: String)
 }

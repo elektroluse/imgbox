@@ -56,6 +56,14 @@ class ImgboxServiceImpl(
         return imgBoxRepository.save(updatedEntity)
     }
 
+    @Transactional
+    override fun delete(id : Long, username : String){
+        val boxToDelete = getImgBox(id)
+        check(boxToDelete.user.username == username)
+        imageStorageService.deleteImage(boxToDelete.fileUrl)
+        imgBoxRepository.deleteById(id)
+    }
+
     override fun getImgBox(id : Long) : ImgBoxEntity{
 
         return imgBoxRepository.findByIdOrNull(id)

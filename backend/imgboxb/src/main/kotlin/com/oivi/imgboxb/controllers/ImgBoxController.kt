@@ -4,6 +4,7 @@ import com.oivi.imgboxb.*
 import com.oivi.imgboxb.domain.dto.*
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
+import com.oivi.imgboxb.exceptions.ImageDeleteException
 import com.oivi.imgboxb.exceptions.ImageUploadException
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImgboxService
@@ -89,12 +90,29 @@ class ImgBoxController(
         }catch (e : Exception){
             return when (e){
                 is NoSuchElementException -> ResponseEntity(HttpStatus.NOT_FOUND)
-                is IllegalStateException -> ResponseEntity(HttpStatus.UNAUTHORIZED)
+                is IllegalStateException -> ResponseEntity(HttpStatus.FORBIDDEN)
                 else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
             }
         }
+    }
+    @DeleteMapping(path = ["id/{id}"])
+    fun deleteImgbox(
+        authentication: Authentication,
+        @PathVariable("id") id : Long) : ResponseEntity<String>{
 
+        try {
+            imageboxService.delete(id, authentication.name)
+            return ResponseEntity<String>("Deleted successfully", HttpStatus.OK)
 
+        }catch (e : Exception){
+            return when (e){
+                is NoSuchElementException -> ResponseEntity(HttpStatus.NOT_FOUND)
+                is ImageDeleteException -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+                is IllegalStateException -> ResponseEntity(HttpStatus.FORBIDDEN)
+                else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+
+        }
     }
 
     @GetMapping(path = ["{username}"])

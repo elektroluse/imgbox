@@ -24,6 +24,8 @@
       - Update everything except id, created_at and file_url (if requesting user is the owner)
       - Works but not happy with implementation will change later
       - Maybe add edited timestamp to db
+    - Delete `DELETE : /api/imgbox/id/{id}`
+      - Deletes entry from database and the referenced imagefile from the fileserver 
     - getByUsername `GET : /api/imgbox/{username}`
       - todo : refactor with user/username literal before to avoid conflicts
         

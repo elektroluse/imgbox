@@ -1,11 +1,9 @@
 import { AuthDto } from "../types/AuthDto";
 import { ImgboxEditForm } from "../types/ImgboxEditForm";
-import { ImgboxUploadDto } from "../types/ImgboxUploadDto";
 import { ImgboxUploadFormType } from "../types/ImgboxUploadFormType";
 import { LoginResponseDto } from "../types/LoginResponseDto";
 import { RegisterResponseDto } from "../types/RegisterResponseDto";
 import { UploadResponseDto } from "../types/UploadResponseDto";
-import { useAuth } from "./AuthProvider";
 
 export async function sendRegisterDto (values : AuthDto) : Promise<RegisterResponseDto> {
     const header = new Headers();
@@ -121,6 +119,31 @@ export async function sendEditRequest(values : ImgboxEditForm, token : string) :
         method : 'put',
         headers : header,
         body : JSON.stringify({...values, id : Number(values.id)})
+      });
+    statusCode = response.status;
+
+    
+    
+  } catch (e : any) {
+    
+    console.log(e);
+  }
+  
+  return statusCode;
+
+}
+
+export async function sendDeleteRequest(id : bigint, token : string) : Promise<number>{
+  const API_URL = "http://localhost:8080/api/imgbox/id/"
+  const header = new Headers();
+  header.append("Authorization", "Bearer " + token);
+  console.log(header.get("Authorization"));
+  let statusCode : number = -1;
+  try{
+    const response = await fetch(`${API_URL}${id}`, 
+      {
+        method : 'delete',
+        headers : header,
       });
     statusCode = response.status;
 

@@ -1,3 +1,4 @@
+import { toast } from "sonner"
 import { Button } from "../../components/ui/button"
 import {
   Dialog,
@@ -8,8 +9,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../components/ui/dialog"
-import { Input } from "../../components/ui/input"
-import { Label } from "../../components/ui/label"
+import { sendDeleteRequest } from "../../services/AuthHelper"
+import { useAuth } from "../../services/AuthProvider"
 import { ImgboxDto } from "../../types/ImgboxDto"
 import EditForm from "../Forms/EditForm"
  
@@ -17,7 +18,25 @@ import EditForm from "../Forms/EditForm"
     currentData : ImgboxDto
  } 
 
+ 
+
 export function EditDialog({currentData} : EditDalogProps) {
+  const auth = useAuth();
+  const deleteRequest = async () => {
+    try{
+        const result = await sendDeleteRequest(currentData.id, auth.token);
+        if(result == 200){
+          toast.success("Deleted the imgbox!");
+        }else{
+          toast.error("Could not delete imgbox!");
+        }
+    }
+    catch(error){
+      console.log(error);
+      toast.error("Error when trying to delete");
+    }
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,6 +51,9 @@ export function EditDialog({currentData} : EditDalogProps) {
         </DialogHeader>
             <EditForm currentData={currentData}/>
         <DialogFooter>
+          <Button
+          variant={"destructive"} 
+          onClick={deleteRequest} >Delete</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

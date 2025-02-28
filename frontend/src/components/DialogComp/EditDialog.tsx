@@ -46,15 +46,17 @@ export function EditDialog({currentData} : EditDalogProps) {
         <DialogHeader>
           <DialogTitle>Edit imgbox</DialogTitle>
           <DialogDescription>
-            Make changes to your imgbox here. Click save when you're done.
+            Make changes to your imgbox here. Click submit when you're done.
           </DialogDescription>
         </DialogHeader>
             <EditForm currentData={currentData}/>
         <DialogFooter>
           <Button
+          className="w-full"
           variant={"destructive"} 
-          onClick={deleteRequest} >Delete</Button>
+          onClick={deleteRequest} >Delete imgbox</Button>
         </DialogFooter>
+      
       </DialogContent>
     </Dialog>
   )

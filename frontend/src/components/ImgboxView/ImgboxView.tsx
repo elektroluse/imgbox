@@ -32,14 +32,17 @@ type ImgboxViewProps = {
                 </div>
                 <p className="w-full">{imgboxDto.description}</p>
                 </div>
-                {
-                    auth.user == imgboxDto.user.username &&
-                    <EditDialog currentData={imgboxDto}/>
-                }
+                
                 
                 
   
 
+              </div>
+              <div className="max-w-lg mx-auto bg-blue-100 rounded-md">
+                {
+                    auth.user == imgboxDto.user.username &&
+                    <EditDialog currentData={imgboxDto}/>
+                }
               </div>
             
         </>  

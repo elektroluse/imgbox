@@ -40,7 +40,7 @@ export function EditDialog({currentData} : EditDalogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Imgbox</Button>
+        <Button className="w-full"variant="link">Edit Imgbox</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

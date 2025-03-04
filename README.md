@@ -26,8 +26,7 @@
       - Maybe add edited timestamp to db
     - Delete `DELETE : /api/imgbox/id/{id}`
       - Deletes entry from database and the referenced imagefile from the fileserver 
-    - getByUsername `GET : /api/imgbox/{username}`
-      - todo : refactor with user/username literal before to avoid conflicts
+    - getByUsername `GET : /api/imgbox/username/{username}`
         
     - downloadByUsername `GET : /api/imgbox/{username}/download`
       - todo : same as above

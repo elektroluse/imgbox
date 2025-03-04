@@ -16,6 +16,8 @@ import com.oivi.imgboxb.toImgBoxDtoSafe
 import com.oivi.imgboxb.update
 import org.apache.commons.io.IOUtils
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -62,6 +64,16 @@ class ImgboxServiceImpl(
         check(boxToDelete.user.username == username)
         imageStorageService.deleteImage(boxToDelete.fileUrl)
         imgBoxRepository.deleteById(id)
+    }
+
+    override fun getImgboxesByUsername(pageable: Pageable, username: String): Page<ImgBoxEntity> {
+        val entityWithUsername : UserEntity = userRepository.findByUsername(username)
+            ?:throw UsernameNotFoundException(username)
+
+        val userId = entityWithUsername.id
+            ?: throw Exception("UNEXPECTED exception")
+
+        return imgBoxRepository.findAllByUserId(pageable,userId)
     }
 
     override fun getImgBox(id : Long) : ImgBoxEntity{

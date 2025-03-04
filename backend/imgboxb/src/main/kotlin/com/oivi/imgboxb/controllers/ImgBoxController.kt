@@ -16,6 +16,8 @@ import org.apache.commons.io.IOUtils
 import org.simpleframework.xml.Path
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.core.io.InputStreamResource
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -115,10 +117,12 @@ class ImgBoxController(
         }
     }
 
-    @GetMapping(path = ["{username}"])
-    fun getImgBoxesByUsername(@PathVariable("username") username : String) : ResponseEntity<List<ImgBoxDto>>{
+    @GetMapping(path = ["username/{username}"])
+    fun getImgBoxesByUsername(
+        @PathVariable("username") username : String,
+        pageable : Pageable) : ResponseEntity<Page<ImgBoxDto>>{
         try {
-            val result = imageboxService.getImgboxesByUsername(username)
+            val result = imageboxService.getImgboxesByUsername(pageable,username)
             return ResponseEntity(result.map { it.toImgBoxDtoKeyForm() }, HttpStatus.OK)
 
         } catch (e : Exception){

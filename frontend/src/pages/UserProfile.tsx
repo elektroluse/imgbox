@@ -39,7 +39,7 @@ function UserProfile(){
                     <h1 className="font-bold text-5xl text-center m-3 text-orange-200"> Imageboxes by user : {params.username} </h1>
                      <div className="max-w-lg mx-auto bg-slate-100 rounded-md p-5">
                      <div className='space-y-2'>
-                    {exists && typeof(data) !== "undefined" &&
+                    {exists && typeof(data) !== "undefined" && Object.keys(data).length > 0 &&
                         <>  
                             <ImgboxTable data={data}/>
                         </> 

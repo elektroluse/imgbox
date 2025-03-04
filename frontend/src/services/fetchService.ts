@@ -9,13 +9,14 @@ async function getImgboxList(username : string, token : string) : Promise<ApiRes
     header.append("Authorization", "Bearer " + token);
     try {
 
-        const response = await fetch(`${BASE_URL}${username}`,
+        const response = await fetch(`${BASE_URL}username/${username}`,
             {
                 method : "get",
                 headers: header
             });
         statusCode = response.status;
-        const listOfImgboxes = await(response.json()) as ImgboxDto[];
+        const data = await(response.json());
+        const listOfImgboxes = data["content"] as ImgboxDto[]
         
         return {
             data : listOfImgboxes,
@@ -28,7 +29,7 @@ async function getImgboxList(username : string, token : string) : Promise<ApiRes
         console.log(error);
         return {
             data : {} as ImgboxDto[],
-            statusCode : 404
+            statusCode : statusCode
         } 
 
     }

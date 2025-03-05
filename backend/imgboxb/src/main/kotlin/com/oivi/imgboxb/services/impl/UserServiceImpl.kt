@@ -5,6 +5,8 @@ import com.oivi.imgboxb.exceptions.RoleRepositoryException
 import com.oivi.imgboxb.repositories.RoleRepository
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.UserService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -40,6 +42,9 @@ class UserServiceImpl(
 
     override fun list(): List<UserEntity> {
         return userRepository.findAll()
+    }
+    override fun list(pageable: Pageable) : Page<UserEntity>{
+       return userRepository.findAll(pageable)
     }
 
     override fun loadUserByUsername(username: String?): UserDetails {

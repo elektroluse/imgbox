@@ -21,7 +21,7 @@
      - List endpoint `GET : /api/v1/users` (phasing out but still in use in frontend) 
      - List Endpoint `GET : /api//users`   (Paginated)
      - Me endpoint `GET : /api/v1/me`
-	- Responds with user corresponding to authentication token in request 
+	 - Responds with user corresponding to authentication token in request 
 - Imgbox Controller `/api/imgbox/**`
     - Upload endpoint `POST : /api/imgbox/upload`
     - getById `GET : /api/imgbox/id/{id}`

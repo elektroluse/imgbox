@@ -28,8 +28,7 @@
       - Deletes entry from database and the referenced imagefile from the fileserver 
     - getByUsername `GET : /api/imgbox/username/{username}`
         
-    - downloadByUsername `GET : /api/imgbox/{username}/download`
-      - todo : same as above
+    - downloadByUsername `GET : /api/imgbox/username/{username}/download`
         
     - downloadImage `GET : /api/imgbox/storage/{objectkey}`
     - downloadImageAlt `GET : /api/imgbox/alternate/{objectkey}`

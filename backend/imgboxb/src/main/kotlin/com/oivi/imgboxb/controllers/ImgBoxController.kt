@@ -133,7 +133,7 @@ class ImgBoxController(
         }
 
     }
-    @GetMapping(path = ["{username}/download"])
+    @GetMapping(path = ["username/{username}/download"])
     fun downloadImgBoxesByUsername(
         @PathVariable("username") username : String) : ResponseEntity<List<ImgboxWithFileDto>>{
             val result = imageboxService.packFileWithBox(

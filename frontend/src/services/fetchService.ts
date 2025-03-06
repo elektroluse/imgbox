@@ -157,8 +157,8 @@ async function getTagCountList(token : string) : Promise<TagCount[]>{
                 headers: header
             });
         statusCode = response.status;
-        const listOfTagCounts = await(response.json()) as TagCount[];
-        
+        const data = await(response.json());
+        const listOfTagCounts = data["content"] as TagCount[]
         return listOfTagCounts;
         
     } catch (error) {

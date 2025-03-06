@@ -1,6 +1,5 @@
 import { ImgboxDto } from "../../types/ImgboxDto";
 import ListTags from "../ListTags";
-import { Badge } from "../ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { Link } from "react-router-dom";
 

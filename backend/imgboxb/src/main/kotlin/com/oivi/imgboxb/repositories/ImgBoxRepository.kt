@@ -10,8 +10,8 @@ import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface ImgBoxRepository : JpaRepository<ImgBoxEntity,Long?>,
-    PagingAndSortingRepository<ImgBoxEntity,Long?> {
+interface ImgBoxRepository : JpaRepository<ImgBoxEntity,Long?>
+     {
 
     fun findAllByUserId(userId : Long) : List<ImgBoxEntity>
     fun findByTitleIgnoreCaseContaining(searchCriteria : String) : List<ImgBoxEntity>

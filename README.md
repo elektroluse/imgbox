@@ -19,7 +19,7 @@
  
  - User Controller
      - List endpoint `GET : /api/v1/users` (phasing out but still in use in frontend) 
-     - List Endpoint `GET : /api//users`   (Paginated)
+     - List Endpoint `GET : /api//users`   (Pageable)
      - Me endpoint `GET : /api/v1/me`
        - Responds with user corresponding to authentication token in request 
 - Imgbox Controller `/api/imgbox/**`
@@ -31,7 +31,7 @@
       - Maybe add edited timestamp to db
     - Delete `DELETE : /api/imgbox/id/{id}`
       - Deletes entry from database and the referenced imagefile from the fileserver 
-    - getByUsername `GET : /api/imgbox/username/{username}`
+    - getByUsername `GET : /api/imgbox/username/{username}` (Pageable)
         
     - downloadByUsername `GET : /api/imgbox/username/{username}/download`
         
@@ -43,7 +43,7 @@
  
  - Tag Controller `/api/tags/**`
     - List all endpoint `GET : /api/tags/list/all`
-    - List all with count endpoint `GET : /api/tags/list/count`
+    - List all with count endpoint `GET : /api/tags/list/count` (Pageable)
     - List imgboxes with tag endpoint `GET : /api/tags/list/imgboxes/{tag}`
    
 ## Services

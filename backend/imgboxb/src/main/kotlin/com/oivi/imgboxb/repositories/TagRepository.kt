@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.Query
 interface TagRepository : JpaRepository<TagEntity,Long?> {
     fun findByName(name : String) : TagEntity?
 
-    @Query(value = "SELECT t FROM TagEntity t ORDER BY size(t.imgboxes) desc")
+    @Query(value = "SELECT t FROM TagEntity t ORDER BY size(t.imgboxes) DESC")
     fun findAllOrderedByOccurrence(pageable: Pageable) : Page<TagEntity>
 }

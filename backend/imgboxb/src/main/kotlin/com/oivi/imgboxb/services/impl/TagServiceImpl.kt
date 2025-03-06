@@ -4,7 +4,8 @@ import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.TagEntity
 import com.oivi.imgboxb.repositories.TagRepository
 import com.oivi.imgboxb.services.TagService
-import com.oivi.imgboxb.services.UserService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
 
@@ -25,6 +26,9 @@ class TagServiceImpl(
     }
     override fun list() : List<TagEntity>{
         return tagRepository.findAll(Sort.by(Sort.Direction.DESC,"imgboxes"))
+    }
+    override fun listByOccurence(pageable: Pageable) : Page<TagEntity> {
+        return tagRepository.findAllOrderedByOccurrence(pageable)
     }
 
 

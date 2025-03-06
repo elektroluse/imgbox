@@ -6,6 +6,8 @@ import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.toImgBoxDtoKeyForm
 import com.oivi.imgboxb.toStringOnly
 import com.oivi.imgboxb.toTagCountDto
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -25,11 +27,10 @@ class TagController(
     }
 
     @GetMapping(path = ["list/all/count"])
-    fun listAllWithCount() : ResponseEntity<List<TagCountDto>>{
-        val result = tagService.list().map { it.toTagCountDto() }
+    fun listAllWithCount(pageable: Pageable) : ResponseEntity<Page<TagCountDto>>{
+        val result = tagService.listByOccurence(pageable).map { it.toTagCountDto() }
         return ResponseEntity(result, HttpStatus.OK)
     }
-
 
     @GetMapping(path = ["list/imgboxes/{tag}"])
     fun findAllImgboxesTaggedWith(@PathVariable("tag") tag : String):

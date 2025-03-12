@@ -12,4 +12,5 @@ interface TagService {
     fun list(): List<TagEntity>
     fun listImgboxesWithTag(tag : String) : List<ImgBoxEntity>
     fun listByOccurence(pageable: Pageable): Page<TagEntity>
+    fun getIfExistsOrNull(name: String, pageable: Pageable): TagEntity?
 }

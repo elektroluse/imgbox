@@ -40,11 +40,13 @@
       - different implementation of above
     - searchByTitle  `GET : /api/imgbox/search/title/{searchTerm}`
       - Returns list of imgboxes where the title contains the search term 
- 
+    - List by tag  `GET : /api/imgbox/tag/{tag}` (Pageable)
+      - Not used on the frontend but going to replace  `GET : /api/tags/list/imgboxes/{tag}`
+
  - Tag Controller `/api/tags/**`
     - List all endpoint `GET : /api/tags/list/all`
     - List all with count endpoint `GET : /api/tags/list/count` (Pageable)
-    - List imgboxes with tag endpoint `GET : /api/tags/list/imgboxes/{tag}`
+    - List imgboxes with tag endpoint `GET : /api/tags/list/imgboxes/{tag}` (to be removed)
    
 ## Services
  - `ImageStorageService`

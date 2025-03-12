@@ -21,6 +21,10 @@ class TagServiceImpl(
         return tagEntity
     }
 
+    override fun getIfExistsOrNull(name: String, pageable: Pageable) : TagEntity?{
+        return tagRepository.findByName(name)
+    }
+
     override fun create(tagEntity : TagEntity) : TagEntity{
         return tagRepository.save(tagEntity)
     }
@@ -30,8 +34,6 @@ class TagServiceImpl(
     override fun listByOccurence(pageable: Pageable) : Page<TagEntity> {
         return tagRepository.findAllOrderedByOccurrence(pageable)
     }
-
-
     override fun listImgboxesWithTag(tag: String): List<ImgBoxEntity> {
         val tagEntity = tagRepository.findByName(tag)
             ?: return emptyList()

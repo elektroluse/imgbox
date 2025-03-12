@@ -192,4 +192,15 @@ class ImgBoxController(
             result.map { it.toImgBoxDtoKeyForm() },
             HttpStatus.OK)
     }
+
+    @GetMapping(path = ["tag/{tag}"])
+    fun getImgboxesByTag(
+        @PathVariable("tag") tag : String,
+        pageable: Pageable) : ResponseEntity<Page<ImgBoxDto>>{
+
+        return ResponseEntity(
+            imageboxService
+                .pageImgboxesWithTag(tag, pageable).map { it.toImgBoxDtoKeyForm() },
+            HttpStatus.OK)
+    }
 }

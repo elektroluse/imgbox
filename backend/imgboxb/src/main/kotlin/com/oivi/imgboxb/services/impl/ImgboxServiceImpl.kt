@@ -1,9 +1,7 @@
 package com.oivi.imgboxb.services.impl
 
-import com.oivi.imgboxb.domain.dto.ImgBoxDto
 import com.oivi.imgboxb.domain.dto.ImgboxEditDto
 import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
-import com.oivi.imgboxb.domain.dto.UserDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.exceptions.ImageUploadException
@@ -15,10 +13,8 @@ import com.oivi.imgboxb.services.TagService
 import com.oivi.imgboxb.toImgBoxDtoSafe
 import com.oivi.imgboxb.update
 import org.apache.commons.io.IOUtils
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.domain.Sort
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
@@ -106,5 +102,11 @@ class ImgboxServiceImpl(
     }
     override fun getImgboxByTitleSearch(searchCriteria : String) : List<ImgBoxEntity>{
         return imgBoxRepository.findByTitleIgnoreCaseContaining(searchCriteria)
+    }
+
+    override fun pageImgboxesWithTag(tag : String, pageable: Pageable) : Page<ImgBoxEntity>{
+        val tagEntity = tagService.getIfExistsOrNull(tag, pageable)
+            ?: return Page.empty()
+        return imgBoxRepository.findAllByTags(pageable,tagEntity)
     }
 }

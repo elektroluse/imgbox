@@ -20,4 +20,5 @@ interface ImgboxService {
     fun getImgboxByTitleSearch(searchCriteria: String): List<ImgBoxEntity>
     fun update(id: Long, alteredData: ImgboxEditDto, usernameOfUpdater: String): ImgBoxEntity
     fun delete(id: Long, username: String)
+    fun pageImgboxesWithTag(tag: String, pageable: Pageable): Page<ImgBoxEntity>
 }

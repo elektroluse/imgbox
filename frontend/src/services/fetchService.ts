@@ -1,5 +1,7 @@
+import { UserInfo } from "os";
 import { ApiResponse } from "../types/ApiResponse";
 import { ImgboxDto } from "../types/ImgboxDto";
+import { PageUserInfo } from "../types/PageUserInfo";
 import { TagCount } from "../types/TagCount";
 
 async function getImgboxList(username : string, token : string) : Promise<ApiResponse>{
@@ -197,6 +199,23 @@ async function getImgboxesByTag(tag : string, token : string)
 
 }
 
+async function getUsersByPage(page : number, size : number) : Promise<PageUserInfo>{
+    
+    const PAGEABLE_URL = "http://localhost:8080/api/users";
+    try{
+        const response = await fetch(`${PAGEABLE_URL}?page=${page}&size=${size}`,
+            {method : 'get'});
+        const pageOfUserInfo : PageUserInfo = await (response.json());
+        
+        return pageOfUserInfo
+
+    } catch(error){
+        console.log(error);
+        
+    }
+    return {content : null, page : null };
+}
+
 export {getImgboxList, getImgboxImage,
      getImgboxFromId, fetchSearchTermList,
-      getTagCountList,getImgboxesByTag};
+      getTagCountList,getImgboxesByTag,getUsersByPage};

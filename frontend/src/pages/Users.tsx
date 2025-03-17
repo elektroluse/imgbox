@@ -2,25 +2,47 @@ import { useEffect, useState } from 'react'
 import DataTable from '../components/DataTable/DataTable'
 import { UserInfo } from '../types/UserInfo';
 import Header from '../components/Navbar/Header';
+import { ChevronRight, ChevronLeft } from "lucide-react"
+import { Button } from '../components/ui/button';
+import { PagingData } from '../types/PagingData';
+import { getUsersByPage } from '../services/fetchService';
 //import './App.css'
 
 const BASE_URL = 'http://localhost:8080/api/v1'
+const PAGEABLE_URL = "http://localhost:8080/api/users"
 
 function Users() {
 
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<UserInfo[]>([]);
+  const [currPage, setCurrPage] = useState(0);
+  const [size, setSize] = useState(5);
+  const [pageMetaData, setPageMetadata] = useState<PagingData>();  
+  
+  
+
+  
+
+  
 
   useEffect(() => {
     const fetchUsers = async () => {
       setIsLoading(true);
 
       try{
-        const response = await fetch(`${BASE_URL}/users`, {method : 'get'});
-        const users = (await response.json()) as UserInfo[];
-        setUsers(users);
-      } catch (e : any) {
+          const result =  await getUsersByPage(currPage,size)
+          const fetchedUsers = result["content"];
+          const pageMetadata = result["page"];
+          setPageMetadata(pageMetadata!)
+          if(fetchedUsers !== null){
+            setUsers(fetchedUsers);
+          }
+          
+          
+          
+        
+        }catch (e : any) {
         setError(e)
       } finally{
         setIsLoading(false);
@@ -31,11 +53,14 @@ function Users() {
     };
 
     fetchUsers()
-  }, [])
+  }, [currPage, size])
+
+ 
+
    
   if(isLoading){
     
-    return <div>
+    return <div className="bg-gray-400 h-screen w-screen space-y-5">
       <Header />
       LOADING...
       
@@ -58,9 +83,20 @@ function Users() {
       <div className="max-w-lg mx-auto bg-slate-100 rounded-md p-5">
         <div className='space-y-2'>
             <DataTable data = {users} />
-            
-        
         </div>
+              
+      </div>
+      <div className="flex max-w-lg mx-auto rounded-md items-center justify-center gap-3">
+              <Button onClick={() => setCurrPage(currPage - 1)}
+                      disabled={currPage == 0}
+                >
+                <ChevronLeft /> Prev
+              </Button>
+              <Button onClick={() => setCurrPage(currPage + 1)}
+                disabled={currPage == pageMetaData?.totalPages! - 1}
+                >
+                <ChevronRight /> Next
+              </Button>
       </div>
       </main>
   )

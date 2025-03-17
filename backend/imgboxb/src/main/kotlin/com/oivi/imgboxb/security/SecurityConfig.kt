@@ -46,6 +46,7 @@ class SecurityConfig @Autowired constructor(
                 authorize(AntPathRequestMatcher("/api/auth/register"), permitAll)
                 authorize(AntPathRequestMatcher("/api/auth/login"), permitAll)
                 authorize(AntPathRequestMatcher("/api/v1/users"), permitAll)
+                authorize(AntPathRequestMatcher("/api/users"), permitAll)
 
 
                 authorize(AntPathRequestMatcher("/api/secure/testuser"),  hasAuthority("USER"))

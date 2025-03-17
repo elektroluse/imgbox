@@ -18,7 +18,7 @@ data class ImgBoxEntity(
     @Column(name = "description")
     val description : String,
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
+    @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.DETACH])
     @JoinTable(
         name = "imgbox_tags", joinColumns = [JoinColumn(name = "imgbox_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "tag_id", referencedColumnName = "id")]

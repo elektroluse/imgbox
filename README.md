@@ -1,5 +1,8 @@
-# Imgbox
- Imgbox web application, React frontend, kotlin springboot backend
+# Imgbox Web Application
+Imgbox is a webapp with a REST API that allows you to. 
+register a user, upload images along with a description, tags that are persisted in a Postgres database. Images are uploaded to an imagestorage service (MinIO) that is referenced in the datbaase. You can retrieve imgboxes by users, tags etc
+React frontend, kotlin springboot backend.
+
 
 ## How to run
 - `git clone https://github.com/elektroluse/imgbox.git`

@@ -1,7 +1,7 @@
-# Imgbox Web Application
-Imgbox is a webapp with a REST API that allows you to. 
-register a user, upload images along with a description, tags that are persisted in a Postgres database. Images are uploaded to an imagestorage service (MinIO) that is referenced in the datbaase. You can retrieve imgboxes by users, tags etc
-React frontend, kotlin springboot backend.
+# ImgBox: A Full-Stack Image Repository Platform
+ImgBox is a full-stack web application that lets users store, organize, and share images online. Built with a React frontend (WIP slightly behind backend) and a Kotlin SpringBoot backend, it provides a complete image management solution where users can upload images with descriptions and tags, search by various criteria, and manage their image collections. The platform uses PostgreSQL for data storage and MinIO for scalable image file management, secured with JWT authentication.
+
+It is a hobby project meant to familiarize myself with JVM backend development and REST APIs within the Spring ecosystem. Features are added/removed as I continue to learn and decide how I want the features to be.    
 
 
 ## How to run

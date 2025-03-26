@@ -8,7 +8,7 @@ It is a hobby project meant to familiarize myself with JVM backend development a
 - `git clone https://github.com/elektroluse/imgbox.git`
 - Backend
   - `cd imgbox/backend/imgboxb`
-  - `docker compose up -d`
+  - `docker-compose up -d`
   - `./mvnw spring-boot:run`
 - Frontend
   - `cd imgbox/frontend`

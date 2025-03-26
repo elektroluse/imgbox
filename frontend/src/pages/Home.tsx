@@ -3,11 +3,14 @@ import Header from "../components/Navbar/Header"
 import CheckLoginStatus from "../components/CheckLoginStatus";
 import SearchForm from "../components/Forms/SearchForm";
 import { ImgboxDto } from "../types/ImgboxDto";
-import ImgboxTable from "../components/DataTable/ImgboxTable";
+import { useAuth } from "../services/AuthProvider";
+import { DataTable } from "../components/DataTable/data-table";
+import {titleTagsUsername } from "../components/DataTable/columnTypes/col_title_tags_username";
 
 export function Home(){
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
     const [searchResult, setSearchResult] = useState<ImgboxDto[] | null>(null)
+    const auth = useAuth();
 
     function setLoggedIn(val : boolean) {
         setIsLoggedIn(val);
@@ -26,11 +29,12 @@ export function Home(){
             <h2 className="font-semibold text-2xl text-center m-3 text-orange-300"
                 > Search for an imgbox by keyword in title
             </h2>
+           
             <SearchForm loggedIn = {isLoggedIn} setSearchData = {setSearchData}  />
             
             {searchResult !== null && searchResult.length > 0 &&
-                <div className="max-w-lg mx-auto bg-slate-100 rounded-md p-5">
-                <ImgboxTable data={searchResult}/>
+                <div className="">
+                <DataTable columns = {titleTagsUsername} data={searchResult}/>
                 </div>
             }
             

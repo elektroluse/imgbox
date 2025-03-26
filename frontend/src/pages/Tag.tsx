@@ -3,8 +3,9 @@ import { useParams } from "react-router-dom";
 import { ImgboxDto } from "../types/ImgboxDto";
 import { getImgboxesByTag } from "../services/fetchService";
 import { useAuth } from "../services/AuthProvider";
-import ImgboxTable from "../components/DataTable/ImgboxTable";
 import Header from "../components/Navbar/Header";
+import { DataTable } from "../components/DataTable/data-table";
+import { titleTagsUsername } from "../components/DataTable/columnTypes/col_title_tags_username";
 
 function Tag(){
     const auth = useAuth();
@@ -24,14 +25,12 @@ function Tag(){
         <main className="bg-gray-400 h-screen w-screen space-y-5">
         <Header />
         <h1 className="font-semibold text-5xl text-center m-1">{"Imgboxes with tag : " + params.tag}</h1>
-           <div className="max-w-lg mx-auto bg-slate-100 rounded-md p-5">
            <div className='space-y-2'>
           {data !== null  &&
               <>  
-                  <ImgboxTable data={data}/>
+                  <DataTable columns={titleTagsUsername} data={data}/>
               </> 
           }
-          </div>
           </div>
     </main>
     )

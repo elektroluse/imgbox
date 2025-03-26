@@ -3,7 +3,48 @@ import { ApiResponse } from "../types/ApiResponse";
 import { ImgboxDto } from "../types/ImgboxDto";
 import { PageUserInfo } from "../types/PageUserInfo";
 import { TagCount } from "../types/TagCount";
+import { PagingData } from "../types/PagingData";
+import { ImgboxListPage } from "../types/ImgboxListPage";
+import { TagCountResponse } from "../types/TagCountResponse";
 
+
+async function getPageableImgboxList(
+    username : string,
+     token : string,
+     page : number,
+     size : number) : Promise<ImgboxListPage>{
+    const BASE_URL = "http://localhost:8080/api/imgbox/";
+    let statusCode = -1;
+    const header = new Headers();
+    header.append("Authorization", "Bearer " + token);
+    try {
+        const response = await fetch(`${BASE_URL}username/${username}?page=${page}&size=${size}`,
+            {
+                method : "get",
+                headers: header
+            });
+        statusCode = response.status;
+        
+        const receivedBody = await(response.json());
+        const data : ImgboxDto[] = receivedBody["content"];
+        const paging : PagingData = receivedBody["page"];
+
+        return {
+            data : data,
+            pageMetadata : paging,
+            statusCode : statusCode
+        } 
+        
+        
+    } catch (error) {
+        console.log(error);
+        return {
+            data : [],
+            pageMetadata : {} as PagingData,
+            statusCode : statusCode
+        }
+    }
+}
 async function getImgboxList(username : string, token : string) : Promise<ApiResponse>{
     const BASE_URL = "http://localhost:8080/api/imgbox/";
     let statusCode = -1;
@@ -144,7 +185,10 @@ async function fetchSearchTermList(searchTerm : string, token : string) : Promis
 
 }
 
-async function getTagCountList(token : string) : Promise<TagCount[]>{
+async function getTagCountPage(
+    token : string,
+     page : number,
+     size : number) : Promise<TagCountResponse>{
 
     const BASE_URL ="http://localhost:8080/api/tags/list/all/count";
     const header = new Headers();
@@ -153,20 +197,28 @@ async function getTagCountList(token : string) : Promise<TagCount[]>{
 
     try {
 
-        const response = await fetch(`${BASE_URL}`,
+        const response = await fetch(`${BASE_URL}?page=${page}&size=${size}`,
             {
                 method : "get",
                 headers: header
             });
         statusCode = response.status;
-        const data = await(response.json());
-        const listOfTagCounts = data["content"] as TagCount[]
-        return listOfTagCounts;
+        const responseBody = await(response.json());
+        const data : TagCount[] = responseBody["content"];
+        const pageInfo : PagingData = responseBody["page"];
+        return {
+            data : data,
+            pageMetadata : pageInfo,
+            statusCode : statusCode
+        }
         
     } catch (error) {
         console.log(error);
 
-       return [];
+       return {
+            data : [],
+            statusCode : statusCode
+       };
        
     }
 }
@@ -218,4 +270,4 @@ async function getUsersByPage(page : number, size : number) : Promise<PageUserIn
 
 export {getImgboxList, getImgboxImage,
      getImgboxFromId, fetchSearchTermList,
-      getTagCountList,getImgboxesByTag,getUsersByPage};
+      getTagCountPage,getImgboxesByTag,getUsersByPage,getPageableImgboxList};

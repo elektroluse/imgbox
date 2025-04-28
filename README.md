@@ -42,7 +42,10 @@ It is a hobby project meant to familiarize myself with JVM backend development a
     - downloadImageAlt `GET : /api/imgbox/alternate/{objectkey}`
       - different implementation of above
     - searchByTitle  `GET : /api/imgbox/search/title/{searchTerm}`
-      - Returns list of imgboxes where the title contains the search term 
+      - Returns list of imgboxes where the title contains the search term
+    - SearchByRequestParam  `GET : /api/imgbox/search/{searchTerm}` (pageable,query param)
+      - available request parameters `title` | `user`
+      - will deprecate searchByTitle
     - List by tag  `GET : /api/imgbox/tag/{tag}` (Pageable)
       - Not used on the frontend but going to replace  `GET : /api/tags/list/imgboxes/{tag}`
 

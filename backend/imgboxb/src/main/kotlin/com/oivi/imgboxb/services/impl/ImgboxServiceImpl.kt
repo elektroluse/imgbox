@@ -5,6 +5,7 @@ import com.oivi.imgboxb.domain.dto.ImgboxWithFileDto
 import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.exceptions.ImageUploadException
+import com.oivi.imgboxb.exceptions.InvalidRequestParameterException
 import com.oivi.imgboxb.repositories.ImgBoxRepository
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImageStorageService
@@ -102,6 +103,14 @@ class ImgboxServiceImpl(
     }
     override fun getImgboxByTitleSearch(searchCriteria : String) : List<ImgBoxEntity>{
         return imgBoxRepository.findByTitleIgnoreCaseContaining(searchCriteria)
+    }
+    override fun getImgboxPageBySearch(searchTerm : String, searchParam : String, pageable: Pageable) : Page<ImgBoxEntity>{
+        return when(searchParam){
+            "user" -> getImgboxesByUsername(pageable,searchTerm)
+            "title" -> imgBoxRepository.findByTitleIgnoreCaseContaining(pageable, searchTerm)
+            else -> throw InvalidRequestParameterException(
+                "Request parameter : $searchParam is invalid, available : user,title")
+        }
     }
 
     override fun pageImgboxesWithTag(tag : String, pageable: Pageable) : Page<ImgBoxEntity>{

@@ -6,6 +6,7 @@ import com.oivi.imgboxb.domain.entities.ImgBoxEntity
 import com.oivi.imgboxb.domain.entities.UserEntity
 import com.oivi.imgboxb.exceptions.ImageDeleteException
 import com.oivi.imgboxb.exceptions.ImageUploadException
+import com.oivi.imgboxb.exceptions.InvalidRequestParameterException
 import com.oivi.imgboxb.repositories.UserRepository
 import com.oivi.imgboxb.services.ImgboxService
 import com.oivi.imgboxb.services.TagService
@@ -191,6 +192,29 @@ class ImgBoxController(
         return ResponseEntity(
             result.map { it.toImgBoxDtoKeyForm() },
             HttpStatus.OK)
+    }
+
+    @GetMapping(path = ["search/{searchTerm}"])
+    fun searchForImgboxesByRequestParam(
+        @PathVariable("searchTerm") searchTerm : String,
+        @RequestParam(name = "searchParam", defaultValue = "title") searchParam : String,
+        pageable : Pageable
+    ): ResponseEntity<Page<ImgBoxDto>>{
+        try{
+            val result = imageboxService.getImgboxPageBySearch(searchTerm,searchParam,pageable);
+            return ResponseEntity(
+                result.map { it.toImgBoxDtoKeyForm() },
+                HttpStatus.OK)
+
+        }catch (e : Exception){
+            return when(e) {
+                is InvalidRequestParameterException -> ResponseEntity(HttpStatus.BAD_REQUEST)
+                is UsernameNotFoundException -> ResponseEntity(HttpStatus.NOT_FOUND)
+                else -> ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR)
+            }
+        }
+
+
     }
 
     @GetMapping(path = ["tag/{tag}"])

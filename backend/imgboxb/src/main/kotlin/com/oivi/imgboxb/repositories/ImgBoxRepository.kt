@@ -16,6 +16,7 @@ interface ImgBoxRepository : JpaRepository<ImgBoxEntity,Long?>
 
     fun findAllByUserId(userId : Long) : List<ImgBoxEntity>
     fun findByTitleIgnoreCaseContaining(searchCriteria : String) : List<ImgBoxEntity>
+    fun findByTitleIgnoreCaseContaining(pageable: Pageable,searchTerm : String) : Page<ImgBoxEntity>
     fun findAllByUserId(pageable: Pageable, id : Long) : Page<ImgBoxEntity>
     fun findAllByTags (pageable: Pageable, tagEntity : TagEntity) : Page<ImgBoxEntity>
 }
